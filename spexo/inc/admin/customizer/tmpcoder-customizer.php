@@ -33,6 +33,8 @@ class Tmpcoder_initialise_customizer_settings {
 
 		// Register Footer controls
 		add_action( 'customize_register', array( $this, 'tmpcoder_footer_controls' ) );
+
+        add_action( 'customize_register', array( $this, 'tmpcoder_site_identify_logo_show_controls' ) );
 	}
 
 	/**
@@ -1419,7 +1421,7 @@ class Tmpcoder_initialise_customizer_settings {
 	            'setting'  => 'button_border_border-color',
 	            'default'  => '#5729d9',
 	            'sanitize' => 'tmpcoder_hex_rgba_sanitization',
-	            'label'    => esc_html__( '', 'spexo' ),
+	            'label'    => '',
 	            'section'  => 'buttons_desktop',
 	            'input_attrs' => array(
 	                'resetalpha' => false,
@@ -1486,7 +1488,7 @@ class Tmpcoder_initialise_customizer_settings {
 	            'setting'  => 'button_border_hover_border-color',
 	            'default'  => '#5729d9',
 	            'sanitize' => 'tmpcoder_hex_rgba_sanitization',
-	            'label'    => esc_html__( '', 'spexo' ),
+	            'label'    => '',
 	            'section'  => 'buttons_desktop',
 	            'input_attrs' => array(
 	                'resetalpha' => false,
@@ -1882,6 +1884,25 @@ class Tmpcoder_initialise_customizer_settings {
 			)
 		) );
 	}
+
+    
+    function tmpcoder_site_identify_logo_show_controls( $wp_customize ) {
+        
+        // Add a setting to show or hide the logo
+        $wp_customize->add_setting( 'logo_display', array(
+            'default'           => true, // Default checked
+            'sanitize_callback' => 'tmpcoder_sanitize_boolean',
+            'transport' => 'refresh',
+        ) );
+    
+        // Add the checkbox control
+        $wp_customize->add_control( 'logo_display', array(
+            'type'        => 'checkbox',
+            'section'     => 'title_tagline', // Site Identity section
+            'label'       => __( 'Display Site Logo', 'spexo' ),
+            'description' => __( 'Show or hide the site logo in the header.', 'spexo' ),
+        ) );
+    }
 }
 
 /**

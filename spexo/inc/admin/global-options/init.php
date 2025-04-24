@@ -23,7 +23,7 @@ $args = array(
     //Specify if the admin menu should appear or not. Options: menu or submenu (Under appearance only)
     'allow_sub_menu'       => true,
     // Show the sections below the admin menu item or not
-    'menu_title'           => esc_html__( 'Global Options','spexo' ),
+    'menu_title'           => esc_html__( 'Global Options', 'spexo' ),
     'page_title'           => esc_html(sprintf(/* translators: %s is the theme name */esc_html__('%s Settings', 'spexo'),TMPCODER_THEME_NAME)),
     // Set it you want google fonts to update weekly. A google_api_key value is required.
     'google_update_weekly' => false,
@@ -87,27 +87,10 @@ Redux::setArgs( $opt_name, $args );
 
 add_action('redux/'.TMPCODER_THEME_OPTION_NAME.'/panel/before','tmpcoder_heading_markup');   
 function tmpcoder_heading_markup(){
-    $output = '<header class="tmpcoder-global-options-header">
-                <div>
-                    <div class="tmpcoder-global-options-logo">
-                        <div class="global-options-header-logo"><img src="'.get_template_directory_uri() . '/assets/images/logo.png">
-                        </div>
-                        <h1>'.esc_html__( 'Global Options', 'spexo' ).'</h1>
-                    </div>
-                </div>';
-    if (!defined( 'TMPCODER_ADDONS_PRO_VERSION' )) {
-
-        $output .= '<div class="tmpcoder-upgrade-now-button-1">
-                   <a target="_blank" href="'.esc_url( TMPCODER_PURCHASE_PRO_URL.'?ref=tmpcoder-theme-global-options' ).'" class="btn-link">
-                        <img src="'.esc_url(get_template_directory_uri().'/assets/images/pro-icon.svg').'">
-                        <span>'.esc_html__( 'Get Pro Now', 'spexo' ).'</span>
-                    </a>
-                </div>';
+    
+    if ( function_exists( 'tmpcoder_render_admin_header' ) ) {
+        tmpcoder_render_admin_header(get_template_directory_uri() . '/assets/images/logo.png', 'global-options');
     }
-
-    $output .= '</header>';
-            
-    echo wp_kses_post( $output );
 } 
 
 get_template_part('inc/admin/global-options/theme-colors');

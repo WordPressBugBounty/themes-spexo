@@ -46,13 +46,36 @@
         }
     });
     
+    /* ----------- skip wizard with confirmation - [START] -----------*/
 
-    $( document ).on('click', '.skip-theme-wizard', function(){
-        console.log("skip-theme-wizard");
-        if ( confirm("Head’s up. This action is non reversible and you won’t be able to see this wizard again. Proceed?") ){
-            window.location.href = tmpcoderMessages.tmpcoder_admin_url;
-        }
+    jQuery(document).on('click', '.skip-theme-wizard', function(e) {
+        e.preventDefault();    
+        tmpcoder_skip_theme_wizard_confirm_popup_open();
     });
+    
+    jQuery(document).on('click', '.tmpcoder-skip-theme-wizard-confirm-button', function(e) {
+        e.preventDefault();
+        jQuery('.tmpcoder-skip-theme-wizard-popup-wrap').fadeOut();
+
+        tmpcoder_skip_theme_setup_wizard();
+    });
+
+    jQuery(document).on('click','.popup-close', function(){
+        jQuery('#tmpcoder-skip-theme-wizard-confirm-popup').fadeOut();
+        jQuery('.tmpcoder-admin-popup').fadeOut();
+        jQuery('.tmpcoder-skip-theme-wizard-popup-wrap').fadeOut();
+    })
+    
+    function tmpcoder_skip_theme_wizard_confirm_popup_open() {
+        jQuery('#tmpcoder-skip-theme-wizard-confirm-popup').fadeIn();
+        jQuery('.tmpcoder-skip-theme-wizard-popup-wrap').fadeIn();
+        jQuery('.tmpcoder-admin-popup').fadeIn();
+    }
+    
+    function tmpcoder_skip_theme_setup_wizard() {
+        window.location.href = tmpcoderMessages.tmpcoder_admin_url;
+    }
+    /* ----------- skip wizard with confirmation - [END] -----------*/
 
     $( document ).on('click', '#theme-welcome .next-step-btn', function(){
         $('[data-tab="install-plugins"]').removeClass('disabled');
@@ -141,7 +164,13 @@
                 $('.process-loader .loader-text').text('');
 
                 if( resp.success ){
-                    
+                        
+                    if (resp.data.skip_this){
+                        $('.get-pro-plugins').removeClass('disabled');
+                        $('.get-pro-plugins').trigger('click');
+                        addRightSign('install-plugins');
+                    }
+
                     if ( resp?.data?.plugins ){
                         
                         var plg_html = '<div class="feature-section recommended-plugins three-col demo-import-boxed">';

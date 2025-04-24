@@ -700,6 +700,7 @@ footer .site-navigation ul.menu a {
 
 
 .page-header .entry-title,
+.page-header .archive-description,
 .site-footer .footer-inner,
 .site-footer:not(.dynamic-footer),
 .site-header .header-inner,
@@ -713,6 +714,7 @@ body:not([class*=elementor-page-]) .site-main {
 @media (max-width:575px) {
 
     .page-header .entry-title,
+    .page-header .archive-description,
     .site-footer .footer-inner,
     .site-footer:not(.dynamic-footer),
     .site-header .header-inner,
@@ -726,6 +728,7 @@ body:not([class*=elementor-page-]) .site-main {
 @media (min-width:576px) {
 
     .page-header .entry-title,
+    .page-header .archive-description,
     .site-footer .footer-inner,
     .site-footer:not(.dynamic-footer),
     .site-header .header-inner,
@@ -743,6 +746,7 @@ body:not([class*=elementor-page-]) .site-main {
 @media (min-width:768px) {
 
     .page-header .entry-title,
+    .page-header .archive-description,
     .site-footer .footer-inner,
     .site-footer:not(.dynamic-footer),
     .site-header .header-inner,
@@ -760,6 +764,7 @@ body:not([class*=elementor-page-]) .site-main {
 @media (min-width:992px) {
 
     .page-header .entry-title,
+    .page-header .archive-description,
     .site-footer .footer-inner,
     .site-footer:not(.dynamic-footer),
     .site-header .header-inner,
@@ -777,6 +782,7 @@ body:not([class*=elementor-page-]) .site-main {
 @media (min-width:1200px) {
 
     .page-header .entry-title,
+    .page-header .archive-description,
     .site-footer .footer-inner,
     .site-footer:not(.dynamic-footer),
     .site-header .header-inner,

@@ -76,15 +76,15 @@ if ( comments_open() && get_option( 'thread_comments' ) ) {
 		?>
 	</ol><!-- .comment-list -->
 
-		<?php the_comments_navigation(); ?>
+	<?php the_comments_navigation(); ?>
 
 <?php endif; // Check for have_comments(). ?>
 
 <?php
 comment_form(
 	array(
-		'title_reply_before' => '<h2 id="reply-title" class="comment-reply-title">',
-		'title_reply_after'  => '</h2>',
+		'title_reply_before' => '<h3 id="reply-title" class="comment-reply-title">',
+		'title_reply_after'  => '</h3>',
 	)
 );
 ?>

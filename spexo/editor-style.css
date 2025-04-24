@@ -121,7 +121,8 @@ html {
 	margin: 0;
   }
 
-  .editor-visual-editor p {
+  .editor-visual-editor p,
+  .editor-styles-wrapper p {
 	margin-top: 0;
 	margin-bottom: 1.2rem;
   }
@@ -3127,3 +3128,61 @@ body .tmpcoder-site-header .wp-mobile-toggle-wrap {
   }
   
   /* ---------------------- Default WP Design end ----------------------- */
+
+/* -------------------- block patterns [Start] -------------------- */
+
+/* Blog/post */
+body .wp-block-query ul li.wp-block-post .wp-block-post-title a {
+  color: unset;
+}
+
+body .wp-block-query ul li.wp-block-post .wp-block-post-author__name a,
+body .wp-block-query ul li.wp-block-post .wp-block-post-title a,
+.wp-block-post-terms.tmpcoder-is-style-post-terms-pill a {
+	text-decoration: inherit !important;
+}
+
+body .wp-block-query ul li.wp-block-post .wp-block-post-author__name a:hover,
+.wp-block-post-terms.tmpcoder-is-style-post-terms-pill a:hover {
+  color: var(--theme-link-hover-color);
+}
+
+body .wp-block-query ul li.wp-block-post .wp-block-post-title a:hover {
+  color: var(--theme-primary-color);
+}
+
+.tmpcoder-is-style-post-terms-pill .wp-block-post-terms__separator,
+.wp-block-post-terms.tmpcoder-is-style-post-terms-pill .wp-block-post-terms__separator {
+  display: none;
+}
+
+.wp-block-post-terms.tmpcoder-is-style-post-terms-pill a {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #67717e;
+  background-color: #E6E9EF;
+  margin-right: 8px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+body .wp-block-query ul li.wp-block-post .taxonomy-category {
+  padding-bottom: 0.8rem;
+}
+
+body .wp-block-query ul li.wp-block-post p,
+body .wp-block-query ul li.wp-block-post .wp-block-group {
+  margin-bottom: 0;
+}
+
+/* team section */
+.wp-block-social-link button.wp-block-social-link-anchor {
+    background-color: transparent;
+}
+
+.wp-block-social-link:hover {
+    transform: scale(1.1);
+}
+/* -------------------- block patterns [END] -------------------- */

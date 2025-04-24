@@ -10,24 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Tmpcoder_Welcome_Notice {
 
 	/**
-	 * Errors class instance.
-	 *
-	 * @var array
-	 * @since 1.0.0
-	 */
-	private $errors = array();
-
-	/**
 	** Constructor.
 	*/
 	public function __construct() {
-
-		$this->errors = array(
-			'permission' => __( 'Sorry, you are not allowed to do this operation.','spexo' ),
-			'nonce'      => __( 'Nonce validation failed','spexo' ),
-			'default'    => __( 'Sorry, something went wrong.','spexo' ),
-			'invalid'    => __( 'No post data found!','spexo' ),
-		);
 
 		// Render Notice
 		add_action( 'admin_notices', array($this, 'tmpcoder_render_notice') );
@@ -81,7 +66,7 @@ class Tmpcoder_Welcome_Notice {
 
 	public function tmpcoder_render_notice() {
 
-		if ( isset($_GET['page']) && $_GET['page'] == 'tmpcoder-plugin-wizard' || isset($_GET['page']) && $_GET['page'] == 'tmpcoder-theme-wizard' ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset($_GET['page']) && $_GET['page'] == 'tmpcoder-plugin-wizard' || isset($_GET['page']) && $_GET['page'] == 'tmpcoder-theme-wizard' || isset($_GET['page']) && $_GET['page'] == 'tmpcoder-setup-wizard' ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 		
@@ -306,7 +291,8 @@ class Tmpcoder_Welcome_Notice {
 		) );
 
 		// Enqueue Styles.
-		wp_enqueue_style( 'tmpcoder-welcome-notice-css', get_template_directory_uri() . '/inc/activation/css/tmpcoder-welcome-notice'.tmpcoder_min_suffix().'.css' );
+		wp_enqueue_style( 'tmpcoder-welcome-notice-css', get_template_directory_uri() . '/inc/activation/css/tmpcoder-welcome-notice'.tmpcoder_min_suffix().'.css','', TMPCODER_THEME_CORE_VERSION 
+		);
 	}
 
 	/**
@@ -346,22 +332,6 @@ class Tmpcoder_Welcome_Notice {
 				'message' => __( 'Plugin Successfully Activated','spexo' ),
 			)
 		);
-	}
-
-	/**
-	 * Get ajax error message.
-	 *
-	 * @param string $type Message type.
-	 * @return string
-	 * @since 1.0.0
-	 */
-	public function tmpcoder_get_error_msg( $type ) {
-
-		if ( ! isset( $this->errors[ $type ] ) ) {
-			$type = 'default';
-		}
-
-		return $this->errors[ $type ];
 	}
 }
 

@@ -7,7 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_template_part('inc/theme-functions');
 get_template_part('inc/theme-hooks');
 get_template_part('inc/forms-hooks');
-get_template_part('inc/admin/global-options/init');
+
+/* This file include in after_setup_theme hook for avoid load_theme_textdomain error */
+add_action('after_setup_theme', 'tmpcoder_after_setup_theme_func');
+function tmpcoder_after_setup_theme_func(){
+    get_template_part('inc/admin/global-options/init');
+} 
 
 /**
  * Custom template tags for this theme.
@@ -33,6 +38,11 @@ get_template_part('inc/wizard/index');
  * Compatibility
 */
 get_template_part('inc/compatibility/class-spexo-starter-content');
+
+/**
+ * Block Patterns
+ */
+get_template_part('inc/compatibility/tmpcoder-patterns');
 
 /**
  * Load all Customizer options

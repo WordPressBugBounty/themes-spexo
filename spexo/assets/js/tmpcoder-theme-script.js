@@ -149,6 +149,23 @@
 jQuery(window).on("load", function() {
   "use strict";
     // Preloader
-    jQuery('#preloader').delay(350).fadeOut('slow');
+    jQuery('.parent-preloader').delay(350).fadeOut('slow');
 });
  /*---- Preloader End -----*/
+
+document.addEventListener("DOMContentLoaded", function() {
+  const hash = window.location.hash;
+  if (hash) {
+    const elementId = hash.substring(1);
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    const themePrimaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-global-color-2').trim();
+      element.style.transition = "background-color 0.3s ease";
+      element.style.backgroundColor = themePrimaryColor || "#f0f8ff";
+      setTimeout(() => {
+        element.style.backgroundColor = "";
+      }, 1000);
+    }
+  }
+});

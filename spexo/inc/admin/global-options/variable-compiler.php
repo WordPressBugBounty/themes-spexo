@@ -63,32 +63,34 @@ if ( ! function_exists('tmpcoder_redux_options_update_theme_variable') ){
         if ( isset($options['secondary_color']) && $options['secondary_color'] != "" ){
             $css .= "--theme-secondary-color:". esc_html($options['secondary_color']).";\n";
         }else{
-            $css .= "--theme-secondary-color:#010101;\n";
+            $css .= "--theme-secondary-color: #010101;\n";
         }
 
         // Accent Color Variable Declare
         if ( isset($options['accent_color']) && $options['accent_color'] != "" ){
             $css .= "--theme-accent-color:". esc_html($options['accent_color']).";\n";
         }else{
-            $css .= "--theme-accent-color:#b2b1b1;\n";
+            $css .= "--theme-accent-color: #b2b1b1;\n";
         }
-
+        
         if ( isset($options['site_background_color']) && $options['site_background_color'] != "" ){
-            if( isset($options['site_background_color'] ) ) {
+            if( isset($options['site_background_color']['background-color'] ) ) {
                 $css .= "--theme-background-color:". esc_html($options['site_background_color']['background-color']).";\n";    
+            } elseif ( isset($options['site_background_color'] ) ) {
+                $css .= "--theme-background-color:". esc_html($options['site_background_color']).";\n";
             } else {
-                $css .= "--theme-background-color:#ffffff;\n";
+                $css .= "--theme-background-color: #ffffff;\n";
             }
         }
         else{
-            $css .= "--theme-background-color:#ffffff;\n";
+            $css .= "--theme-background-color: #ffffff;\n";
         }  
         
         // Button Variable Declare
         if ( isset($options['site_button_color']) && $options['site_button_color'] != "" ){
             $css .= "--theme-button-background:". esc_html($options['site_button_color']).";\n";
         }else{
-            $css .= "--theme-button-background:#5729d9;\n";
+            $css .= "--theme-button-background: #5729d9;\n";
         }
 
         if ( isset($options['site_button_color_hover']) && $options['site_button_color_hover'] != "" ){
@@ -101,49 +103,49 @@ if ( ! function_exists('tmpcoder_redux_options_update_theme_variable') ){
         if ( isset($options['link_color']) && $options['link_color'] != "" ){
             $css .= "--theme-link-color:". esc_html($options['link_color']).";\n";
         }else{
-            $css .= "--theme-link-color:#5729d9;\n";
+            $css .= "--theme-link-color: #5729d9;\n";
         }
 
         // Link Hover Color Variable Declare
         if ( isset($options['link_hover_color']) && $options['link_hover_color'] != "" ){
             $css .= "--theme-link-hover-color:". esc_html($options['link_hover_color']).";\n";
         }else{
-            $css .= "--theme-link-hover-color:#1d2327;\n";
+            $css .= "--theme-link-hover-color: #1d2327;\n";
         }
 
         // Global Border Color Variable Declare
         if ( isset($options['global_border_color']) && $options['global_border_color'] != "" ){
             $css .= "--theme-global-border-color:". esc_html($options['global_border_color']).";\n";
         }else{
-            $css .= "--theme-global-border-color:#E6E8EA;\n";
+            $css .= "--theme-global-border-color: #E6E8EA;\n";
         }
 
         // Theme Color 1
         if ( isset($options['theme_color_1']) && $options['theme_color_1'] != "" ){
             $css .= "--theme-global-color-1:". esc_html($options['theme_color_1']).";\n";
         }else{
-            $css .= "--theme-global-color-1:#010101;\n";
+            $css .= "--theme-global-color-1: #010101;\n";
         }
 
         // Theme Color 2
         if ( isset($options['theme_color_2']) && $options['theme_color_2'] != "" ){
             $css .= "--theme-global-color-2:". esc_html($options['theme_color_2']).";\n";
         }else{
-            $css .= "--theme-global-color-2:#f4f2f9;\n";
+            $css .= "--theme-global-color-2: #f4f2f9;\n";
         }
 
         // Theme Color 3
         if ( isset($options['theme_color_3']) && $options['theme_color_3'] != "" ){
             $css .= "--theme-global-color-3:". esc_html($options['theme_color_3']).";\n";
         }else{
-            $css .= "--theme-global-color-3:#ffffff;\n";
+            $css .= "--theme-global-color-3: #ffffff;\n";
         }
 
         // Theme Color 4
         if ( isset($options['theme_color_4']['rgba']) && $options['theme_color_4']['rgba'] != ''){
             $css .= "--theme-global-color-4:". esc_html($options['theme_color_4']['rgba']).";\n";
         }else{
-            $css .= "--theme-global-color-4:#ffffff;\n";
+            $css .= "--theme-global-color-4: #ffffff;\n";
         }
 
         // Site Variable Declare
@@ -285,14 +287,40 @@ if ( ! function_exists('tmpcoder_redux_options_update_theme_variable') ){
             if ( isset($options['heading_'.$i]['font-size']) && $options['heading_'.$i]['font-size'] != "" ){
                 $css .= "--heading".$i."-font-size:". esc_html($options['heading_'.$i]['font-size']).";\n";
             }else{
-                $css .= "--heading".$i."-font-size:". (48 -( $i * 6)) ."px;\n";
+                // $css .= "--heading".$i."-font-size:". (48 -( $i * 6)) ."px;\n";
+                if ( $i == 1){
+                    $css .= "--heading".$i."-font-size: 32px;\n";
+                }elseif ($i == 2) {
+                    $css .= "--heading".$i."-font-size: 26px;\n";
+                }elseif ($i == 3) {
+                    $css .= "--heading".$i."-font-size: 20px;\n";
+                }elseif ($i == 4) {
+                    $css .= "--heading".$i."-font-size: 17px;\n";
+                }elseif ($i == 5) {
+                    $css .= "--heading".$i."-font-size: 15px;\n";
+                }else{
+                    $css .= "--heading".$i."-font-size: 13px;\n";
+                }
             }
             
             if ( isset($options['heading_'.$i]['line-height']) && $options['heading_'.$i]['line-height'] != "" ){
                 $css .= "--heading".$i."-line-height:". esc_html($options['heading_'.$i]['line-height']).";\n";
             }else{
                 //$css .= "--heading".$i."-line-height:". (48 -( $i * 6)) ."px;\n";
-                $css .= "--heading".$i."-line-height: 1.2;\n";
+                // $css .= "--heading".$i."-line-height: 1.2;\n";
+                if ( $i == 1){
+                    $css .= "--heading".$i."-line-height: 48px;\n";
+                }elseif ($i == 2) {
+                    $css .= "--heading".$i."-line-height: 30px;\n";
+                }elseif ($i == 3) {
+                    $css .= "--heading".$i."-line-height: 24px;\n";
+                }elseif ($i == 4) {
+                    $css .= "--heading".$i."-line-height: 22px;\n";
+                }elseif ($i == 5) {
+                    $css .= "--heading".$i."-line-height: 20px;\n";
+                }else{
+                    $css .= "--heading".$i."-line-height: 16px;\n";
+                }
             }
 
             if ( isset($options['heading_'.$i]['letter-spacing']) && $options['heading_'.$i]['letter-spacing'] != "" ){

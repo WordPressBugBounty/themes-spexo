@@ -285,9 +285,11 @@ header.tmpcoder-global-options-header .tmpcoder-upgrade-now-button-1{
     padding-left: 0px;
 }
 
-.spexo-addons_page_spexo_addons_global_settings #wpbody-content > .wrap{
-    padding-left: 20px;
+.spexo-addons_page_spexo_addons_global_settings #wpbody-content > .wrap:not(.tmpcoder-theme-wrap) {
+    padding-left: 30px;
+    margin-right: 30px;
 }
+
 .notice-dismiss {
     z-index: 1;
 }

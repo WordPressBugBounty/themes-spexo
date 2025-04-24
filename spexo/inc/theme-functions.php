@@ -33,7 +33,7 @@ class Tmpcoder_Main_Class
         add_filter('wp_nav_menu',array($this,'tmpcoder_add_class_in_submenu')); 
 
         // When activate theme follow wizard process - only admin access
-        if ( !isset($_GET['page']) || (isset($_GET['page']) && 'tmpcoder-plugin-wizard' != $_GET['page'] && 'tmpcoder-theme-wizard' != $_GET['page']) ){// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        if ( !isset($_GET['page']) || (isset($_GET['page']) && 'tmpcoder-plugin-wizard' != $_GET['page'] && 'tmpcoder-theme-wizard' != $_GET['page'] && 'tmpcoder-setup-wizard' != $_GET['page']  ) ){// phpcs:ignore WordPress.Security.NonceVerification.Recommended
         add_action( 'tgmpa_register', array($this,'tmpcoder_require_plugins') );
         }
         
@@ -46,7 +46,7 @@ class Tmpcoder_Main_Class
 
         if ( Tmpcoder_Site_Settings::tmpcoder_has('tmpcoder_pre_loder') && Tmpcoder_Site_Settings::tmpcoder_get('tmpcoder_pre_loder') == 1) { ?>
     
-        <div id="preloader">
+        <div id="preloader" class="parent-preloader">
             <div class="preloader">
                 <?php
                     if (Tmpcoder_Site_Settings::tmpcoder_has('tmpcoder_preloder_custom_html')) 
@@ -90,14 +90,6 @@ class Tmpcoder_Main_Class
         
         add_theme_support( 'title-tag' );
 
-        register_block_pattern(
-            'spexo/hello-world',
-            array(
-                'title'   => __( 'Section','spexo' ),
-                'content' => "<!-- wp:paragraph -->\n<section>Hello World</section>\n<!-- /wp:paragraph -->",
-            )
-        );
-
         add_theme_support( 'post-thumbnails' );
 
         // Add support for starter content ( wp preview ).
@@ -135,11 +127,24 @@ class Tmpcoder_Main_Class
 
         add_theme_support( 'custom-line-height' );
 
-        add_theme_support( 'editor-styles' );
+        if ( is_admin() ) {
+            add_action('current_screen', function () {
+                $screen = get_current_screen();
+                $action = isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash($_GET['action']) ) : '';
         
-        add_editor_style(get_template_directory_uri() . '/editor-style' . tmpcoder_min_suffix() . '.css?v=' . TMPCODER_THEME_CORE_VERSION);
-
-        add_editor_style('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+                if (
+                    ( $screen && method_exists( $screen, 'is_block_editor' ) && $screen->is_block_editor() ) || 
+                    ( $screen && $screen->id === 'site-editor' )
+                ) {
+                    if ( ( !class_exists('Elementor\Plugin') || !Elementor\Plugin::instance()->editor->is_edit_mode() ) && $action !== 'elementor' ) {
+                        add_theme_support( 'editor-styles' );
+        
+                        add_editor_style( get_template_directory_uri() . '/editor-style' . tmpcoder_min_suffix() . '.css?v=' . TMPCODER_THEME_CORE_VERSION );
+                        add_editor_style( 'https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap' );
+                    }
+                }
+            });
+        }
 
         /* Add dynamic fonts to the block editor - START */
         $tmpcoderThemeMods = get_theme_mods();
@@ -153,7 +158,7 @@ class Tmpcoder_Main_Class
         }
 
         $fonts = array_unique(array_merge([
-            isset($site_fonts['font']) ? $site_fonts['font'] : '', 
+            isset($site_fonts['font']) ? $site_fonts['font'] : '',
             isset($button_fonts['font']) ? $button_fonts['font'] : ''
         ], $heading_fonts));
 
@@ -383,16 +388,14 @@ function tmpcoder_get_blog_list()
 
 function tmpcoder_get_single_blog()
 {
+
     ?>
-    <header class="page-header">
-        <h1 class="entry-title"><?php the_title() ?></h1>
-    </header>
     <div class="page-content">
         <div class="blog-detail-img">
             <?php the_post_thumbnail('full') ?>
         </div>
         <div class="blog-detail-content">
-            <h3><?php the_title() ?></h3>
+            <h1><?php the_title() ?></h1>
             <ul class="blog-date blog-meta-options">
                 <?php 
                 $comments = get_comments_number(); 
@@ -401,6 +404,23 @@ function tmpcoder_get_single_blog()
                 <?php } ?>                 
                     <li class="post-meta-item"><?php tmpcoder_posted_by() ?></li>
                     <li class="post-meta-item"><?php tmpcoder_posted_on() ?></li>
+                    <?php 
+
+                    $categories = get_the_category();
+
+                    if ( ! empty( $categories ) ) {
+                        $output = '';
+                        foreach ( $categories as $key => $category ) {
+                            $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">'
+                                        . esc_html( $category->name ) . '</a>';
+                            if ( $key !== array_key_last( $categories ) ) {
+                                $output .= ', ';
+                            }
+                        }
+                        echo '<li>' . wp_kses_post($output) . '</li>';
+                    }
+
+                    ?>
             </ul>
             <div class="blog-detail-description">
                 <?php the_content() ?>

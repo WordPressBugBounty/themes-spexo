@@ -3,8 +3,7 @@
 if ( !function_exists('tmpcoder_is_plugin_installed') ){
     function tmpcoder_is_plugin_installed( $slug ) {
         if ( ! function_exists( 'get_plugins' ) ) {
-        // require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        get_template_part(ABSPATH . 'wp-admin/includes/plugin');
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
         $all_plugins = get_plugins();
         

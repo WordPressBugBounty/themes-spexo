@@ -1622,3 +1622,15 @@ body .site-main #order_review .shop_table tbody tr td:last-child {
         height: 102vh;
     }
 }
+
+body:not(.woocommerce-block-theme-has-button-styles) .wc-block-components-totals-coupon__content .wc-block-components-button:not(.is-link){
+    min-height: 2em;
+}
+
+body.woocommerce-cart .site-main .wc-block-grid__product-onsale {
+    border-radius: 50px;
+}
+
+body.woocommerce-account .site-main .woocommerce a {
+    text-decoration: none;
+}

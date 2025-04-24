@@ -252,6 +252,7 @@ class Spexo_Starter_Content {
 				'custom_logo' => '{{featured-image-logo}}',
 				'site_icon'   => '{{site_icon}}',
 				'logo_show_tagline' => 0,
+                'logo_display' => 1,
 			),	
 			'attachments' => array(
 				'featured-image-logo' => array(
@@ -288,13 +289,19 @@ class Spexo_Starter_Content {
 	}
 }
 
-add_action('init', 'tmpcoder_pre_set_theme_mod_settings');
+// add_action('init', 'tmpcoder_pre_set_theme_mod_settings');
 function tmpcoder_pre_set_theme_mod_settings(){
     add_filter('pre_set_theme_mod_custom_logo', 'tmpcoder_pre_set_custom_logo');
     add_filter('pre_set_theme_mod_site_icon', 'tmpcoder_pre_set_site_icon');
+
+	// Force set the logo on theme activation
+	if ( ! get_theme_mod( 'custom_logo' ) ) {
+        tmpcoder_pre_set_custom_logo('');
+    }
 }
 
 function tmpcoder_pre_set_custom_logo($value) {
+
     // If a logo is already set, return it.
     if (!empty($value)) {
         return $value;
@@ -309,9 +316,15 @@ function tmpcoder_pre_set_custom_logo($value) {
         return $value;
     }
 
-    // Check if an attachment for this logo already exists
-    $attachment = get_page_by_title('Predefined Logo', OBJECT, 'attachment');
-    if ($attachment) {
+    // Check if an attachment for this logo already exists using WP_Query
+    $attachment_query = new WP_Query(array(
+        'post_type'      => 'attachment',
+        'title'          => 'Predefined Logo',
+        'posts_per_page' => 1,
+    ));
+
+    if ($attachment_query->have_posts()) {
+        $attachment = $attachment_query->posts[0];
         return $attachment->ID;
     }
 

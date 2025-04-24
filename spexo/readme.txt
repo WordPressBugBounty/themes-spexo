@@ -4,7 +4,7 @@ Author: Spexo
 Requires at least: WordPress 4.7+
 Tested up to: WordPress 6.7
 Requires PHP: 7.4
-Version: 2.0.2
+Version: 2.0.3
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, e-commerce, news, portfolio, food-and-drink, one-column, custom-background, custom-colors, full-width-template, custom-menu, custom-logo, featured-images, sticky-post, theme-options, threaded-comments, translation-ready
@@ -69,6 +69,12 @@ Additional Font Metadata Source for WordPress Customizer Typography Options:
 
 
 == Changelog ==
+
+= 2.0.3 =
+* Added: Versatile Block Patterns for effortless design Hero Section, Featured Section, Banner, Post, and Teams Patterns for enhanced flexibility and creativity!
+* Improved : The overall look and feel of the theme's default design, focusing on a more modern and polished aesthetic. Improved spacing and alignment for a balanced and visually appealing layout across all devices.
+* Fix: Notice textdomain was triggered too early.
+
 
 = 2.0.2 =
 * Improved: Added preset logo and favicon support in Starter Content.

@@ -72,7 +72,7 @@ $opt_name = TMPCODER_THEME_OPTION_NAME;
 	                'title'    => esc_html__( 'Site Button Background Hover Color','spexo' ),             
 	                'subtitle' => esc_html__( 'Set your theme site button background hover color','spexo' ),
 	                'output'    => array(), // An array of CSS selectors
-		            'default'  => '#ffffff',
+		            'default'  => 'transparent',
 		            'validate' => 'color',
 	            ),
 		      	array(
@@ -108,7 +108,7 @@ $opt_name = TMPCODER_THEME_OPTION_NAME;
                     'type' => 'slider',
                     'title' => __('Button Border Radius','spexo'),
                     'subtitle' => __('if set Border Radius - 0 then Border Radius unset','spexo'),
-                    "default" => 0,
+                    "default" => 4,
                     "min" => 0,
                     "step" => 1,
                     "max" => 100,

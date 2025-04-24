@@ -408,7 +408,7 @@ body .tmpcoder-theme-wizard .theme-wizard-main .wizard-heading{
     display: none;
 }
 .tmpcoder-theme-wizard .loader-image {
-    background-image: url(../../../assets/images/backend-loader.gif);
+    background-image: url(../../../assets/images/loader.gif);
     background-repeat: no-repeat;
     width: 64px;
     height: 64px;
@@ -470,6 +470,89 @@ body .tmpcoder-theme-wizard .theme-wizard-main .wizard-heading{
 .pro-plugins-part .next-step-action {
     margin-bottom: 30px;
 }
+
+/*============= skip wizard confirm popup - [START] =============*/
+
+.tmpcoder-skip-theme-wizard-popup-wrap.tmpcoder-admin-popup-wrap {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+}
+
+.tmpcoder-skip-theme-wizard-popup.tmpcoder-admin-popup {
+    display: flex;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    width: 80%;
+    max-width: 550px;
+    background-color: #FFF;
+}
+
+.tmpcoder-skip-theme-wizard-popup .button {
+    background: #562ad5;
+    border-color: #562ad5;
+    color: #fff;
+    transition-duration: 0.3s;
+}
+
+.tmpcoder-skip-theme-wizard-popup .button.button-secondary {
+    background: transparent;
+    border-color: #562ad5;
+    color: #562ad5;
+    transition-duration: 0.3s;
+}
+
+.tmpcoder-skip-theme-wizard-popup .button:hover {
+    background: transparent;
+    border-color: #562ad5;
+    color: #562ad5;
+}
+
+.tmpcoder-skip-theme-wizard-popup .button.button-secondary:hover {
+    background: #562ad5;
+    border-color: #562ad5;
+    color: #fff;
+    transition-duration: 0.3s;
+}
+
+#tmpcoder-skip-theme-wizard-confirm-popup {
+    padding: 30px;
+}
+
+#tmpcoder-skip-theme-wizard-confirm-popup .popup-heading {
+    font-size: 26px;
+    margin-top: 0;
+}
+
+#tmpcoder-skip-theme-wizard-confirm-popup .popup-message {
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+#tmpcoder-skip-theme-wizard-confirm-popup .button {
+    padding: 3px 20px;
+    font-size: 14px;
+    margin-right: 4px;
+}
+/*============= skip wizard confirm popup - [END] =============*/
 
 @media only screen and (min-width: 1600px) {
     .tmpcoder-theme-wizard .tab-content-install-plugins .plugin_box:nth-child(3) {

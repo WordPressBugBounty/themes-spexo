@@ -151,6 +151,21 @@ class Tmpcoder_Theme_Setup_Wizard {
                 </div>
             </div>
         </div>
+
+        <div class="tmpcoder-skip-theme-wizard-popup-wrap tmpcoder-admin-popup-wrap">
+            <div class="tmpcoder-skip-theme-wizard-popup tmpcoder-admin-popup">
+                <div id="tmpcoder-skip-theme-wizard-confirm-popup" class="mfp-hide">
+                    <h2 class="popup-heading"> <?php esc_html_e('Skip the Setup Wizard?','spexo') ?> </h2>
+                    <div class="popup-content">
+                         <p class="popup-message"><?php esc_html_e('Heads up! Would you like to continue without completing the setup wizard?', 'spexo') ?></p>
+                        <p class="popup-message"><?php echo wp_kses_post(__('You’ll still be able to access the setup wizard later from the <strong>“Appearance → Setup Wizard”</strong> menu.', 'spexo')); ?></p>
+                        <a class="button button-primary popup-close"><?php esc_html_e('Continue Setup', 'spexo') ?></a>
+                        <a class="button button-secondary tmpcoder-skip-theme-wizard-confirm-button"><?php esc_html_e('Yes, Skip', 'spexo') ?></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <?php 
     }    
 }

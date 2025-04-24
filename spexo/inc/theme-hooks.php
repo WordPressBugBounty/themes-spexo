@@ -98,12 +98,16 @@ if ( ! function_exists( 'tmpcoder_header_markup' ) ) {
         if ( ! empty( $get_site_logo ) ) {
             $site_logo = $get_site_logo;
         } else {
-            $site_logo = wp_get_attachment_url( get_theme_mod( 'custom_logo' ) );
+            $custom_logo_id = get_theme_mod( 'custom_logo' );
+            $site_logo = wp_get_attachment_url( $custom_logo_id );
         }
 
-		$logo_text = ( Tmpcoder_Site_Settings::tmpcoder_has('tmpcoder_logo_text') ) ? Tmpcoder_Site_Settings::tmpcoder_get('tmpcoder_logo_text') : '';
+		$logo_text = ( Tmpcoder_Site_Settings::tmpcoder_has('tmpcoder_logo_text') ) ? Tmpcoder_Site_Settings::tmpcoder_get('tmpcoder_logo_text') : get_bloginfo('name');
 
         $tagline = get_bloginfo( 'description', 'display' );
+
+        $logo_display = get_theme_mod( 'logo_display' );
+
 		?>
         
 		<header id="site-header" class="tmpcoder-site-header">
@@ -111,23 +115,25 @@ if ( ! function_exists( 'tmpcoder_header_markup' ) ) {
                 <div class="site-branding">
                     <a href="<?php echo esc_url( home_url()); ?>">
                         <?php 
-                            if(!empty($site_logo)){
-                                echo '<img class="transition" src="' . esc_url( $site_logo ) . '" alt="' . esc_attr( get_bloginfo('name') ) . '" />';
-
+                            if ( $logo_display ) {
+                                if( !empty($site_logo) ){
+                                    echo '<img class="transition" src="' . esc_url( $site_logo ) . '" alt="' . esc_attr( get_bloginfo('name') ) . '" />';
+                                }else{
+                                    echo '<h1 class="transition" data-logo="'.esc_attr($logo_display).'" data-logo-id="'.esc_attr($custom_logo_id).'">'. esc_html($logo_text).'</h1>';
+                                }
                             }elseif(!empty($logo_text)) {
-                                echo '<h1 class="transition">'. esc_html($logo_text).'</h1>';
+                                echo '<h1 class="transition site-title-option">'. esc_html($logo_text).'</h1>';
                                 if ( $tagline ) : ?>
-                                    <p class="site-description"><?php echo esc_html($tagline); ?></p>
+                                    <p class="site-description site-tagline-option"><?php echo esc_html($tagline); ?></p>
                                     <?php
                                 endif; 
                             }else{
-                                echo '<h1 class="transition">' . esc_html( get_bloginfo('name') ) . '</h1>';
+                                echo '<h1 class="transition site-title">' . esc_html( get_bloginfo('name') ) . '</h1>';
                                 if ( $tagline ) : ?>
-                                    <p class="site-description"><?php echo esc_html($tagline); ?></p>
+                                    <p class="site-description site-tagline"><?php echo esc_html($tagline); ?></p>
                                     <?php
                                 endif; 
                             }
-
                         ?>
                     </a>
                 </div>

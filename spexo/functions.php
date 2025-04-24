@@ -21,7 +21,7 @@ if ( ! defined( 'TMPCODER_THEME_SLUG' ) ) {
 }
 
 if ( ! defined( 'TMPCODER_THEME_CORE_VERSION' ) ) {
-    define( 'TMPCODER_THEME_CORE_VERSION', trim($tmpcoder_theme->get('Version')) );
+    define( 'TMPCODER_THEME_CORE_VERSION', trim( $tmpcoder_theme->get('Version')));
 }
 
 if ( !defined('TMPCODER_THEME_OPTION_NAME') ){

@@ -836,4 +836,13 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 			return $input;
 		}
 	}
+
+    /**
+	 * Boolean sanitization
+	 */
+    if ( ! function_exists( 'tmpcoder_sanitize_boolean' ) ) {
+        function tmpcoder_sanitize_boolean( $value ) {
+            return filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+        }
+    }
 }

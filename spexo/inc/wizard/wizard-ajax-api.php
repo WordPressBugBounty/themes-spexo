@@ -16,6 +16,7 @@ function tmpcoder_get_recommended_plugins(){
     $tgmpaClass = $GLOBALS['tgmpa'];
     $plugins = array();
     $next_step = __('Next', 'spexo');
+    $activated_plugin = [];
 
     if ( is_object($tgmpaClass) ){
         if ( empty($tgmpaClass->plugins) ){
@@ -50,6 +51,10 @@ function tmpcoder_get_recommended_plugins(){
                 // modify these variables with your new/old plugin values
                 $plugin_slug = $plugin['slug'];
                 $plugin_file_path = $plugin['file_path'];
+
+                if (is_plugin_active($plugin_file_path)) {
+                    array_push($activated_plugin, $plugin_slug);
+                }
                 
                 if ( tmpcoder_is_plugin_installed( $plugin_file_path ) && in_array($plugin_file_path, apply_filters('active_plugins', get_option('active_plugins'))) ){
                     $plugin['activated'] = true;
@@ -61,6 +66,12 @@ function tmpcoder_get_recommended_plugins(){
                 }
                 array_push($plugins, $plugin);
             }
+
+            $skip_this = false;
+            if (count($activated_plugin) == 3) {
+                $skip_this = true;
+                update_option(TMPCODER_THEME_SLUG.'_wizard_step', '2');
+            }
         }
     }
 
@@ -71,6 +82,7 @@ function tmpcoder_get_recommended_plugins(){
                 'plugins'=> $plugins,
                 'message'=> __('Plugins getting successfully.','spexo'),
                 'next_step'=> $next_step,
+                'skip_this' => $skip_this
             )
         );
     }else{
@@ -159,11 +171,6 @@ function tmpcoder_install_recommended_plugins(){
         update_option('sastra_addons_wizard_page', 1);
         update_option('spexo_addons_wizard_page', 1);
 
-        if ( function_exists('flush_rewrite_rules') ){
-            // Flush rewrite rules
-            flush_rewrite_rules();
-        }
-
         echo wp_json_encode( array('success'=> true, 'data' => array("message"=> __('All recommended plugins installed & activated successfully.','spexo') ) ) );
         exit;
 
@@ -191,11 +198,6 @@ function tmpcoder_get_pro_plugin_info(){
     if ( is_plugin_active( 'sastra-essential-addons-for-elementor/sastra-essential-addons-for-elementor.php' ) ) {
         
         $admin_url = admin_url('admin.php?page=tmpcoder-import-demo&saved=wizard');
-    }
-
-    if ( function_exists('flush_rewrite_rules') ){
-        // Flush rewrite rules
-        flush_rewrite_rules();
     }
 
     ob_start();

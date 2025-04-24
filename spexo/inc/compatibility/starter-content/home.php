@@ -8,7 +8,7 @@
 
 // @codingStandardsIgnoreStart WordPressVIPMinimum.Security.Mustache.OutputNotation -- Required for starter content.
 $tmpcoder_default_home_content = '<!-- wp:cover {"customOverlayColor":"#f1f7ff","isUserOverlayColor":true,"minHeight":50,"minHeightUnit":"px","contentPosition":"center center","isDark":false,"metadata":{"categories":["gallery"],"patternName":"core/fullscreen-cover-image-gallery","name":"Fullscreen cover image gallery"},"align":"full","style":{"spacing":{"padding":{"top":"0px","bottom":"0px","left":"0px","right":"0px"},"margin":{"top":"0px","bottom":"0px"},"blockGap":"0px"}}} -->
-<div class="wp-block-cover alignfull is-light" style="margin-top:0px;margin-bottom:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;min-height:50px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim" style="background-color:#f1f7ff"></span><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"align":"center","placeholder":"Write title…","fontSize":"large"} -->
+<div class="wp-block-cover alignfull is-light tmpcoder-starter-content" style="margin-top:0px;margin-bottom:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;min-height:50px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim" style="background-color:#f1f7ff"></span><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"align":"center","placeholder":"Write title…","fontSize":"large"} -->
 <p class="has-text-align-center has-large-font-size"></p>
 <!-- /wp:paragraph -->
 

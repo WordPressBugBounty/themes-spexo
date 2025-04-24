@@ -63,9 +63,9 @@ Redux::setSection( $opt_name,
 		            'color'       => '#1d2327',
 		            'font-style'  => '600', 
 		            'font-family' => 'Poppins',
-		            'font-size'   => '43px',
+		            'font-size'   => '32px',
 		            'letter-spacing' => '1px',
-		            'line-height' => '50px'
+		            'line-height' => '48px'
 		        ),
             ),
             array(
@@ -86,9 +86,9 @@ Redux::setSection( $opt_name,
 		            'color'       => '#1d2327',
 		            'font-style'  => '600', 
 		            'font-family' => 'Poppins',
-		            'font-size'   => '35px',
+		            'font-size'   => '26px',
 		            'letter-spacing' => '1px',
-		            'line-height' => '24px'
+		            'line-height' => '30px'
 		        ),
             ),
             array(
@@ -134,7 +134,7 @@ Redux::setSection( $opt_name,
 		            'font-family' => 'Poppins',
 		            'font-size'   => '17px',
 		            'letter-spacing' => '1px',
-		            'line-height' => '24px'
+		            'line-height' => '22px'
 		        ),
             ),
             array(
@@ -157,7 +157,7 @@ Redux::setSection( $opt_name,
 		            'font-family' => 'Poppins',
 		            'font-size'   => '15px',
 		            'letter-spacing' => '1px',
-		            'line-height' => '18px'
+		            'line-height' => '20px'
 		        ),
             ),
             array(
@@ -180,7 +180,7 @@ Redux::setSection( $opt_name,
 		            'font-family' => 'Poppins',
 		            'font-size'   => '13px',
 		            'letter-spacing' => '1px',
-		            'line-height' => '10px'
+		            'line-height' => '16px'
 		        ),
             ),
         )
@@ -234,9 +234,9 @@ Redux::setSection( $opt_name,
                 'letter-spacing' => true,
                 'color' => false,
                 'default'     => array(
-		            'font-size'   => '14px', 
+		            'font-size'   => '24px', 
                 	'letter-spacing' => '1px',
-		            'line-height' => '24px'
+		            'line-height' => '28px'
 		        ),
             ),
             array(
@@ -256,7 +256,7 @@ Redux::setSection( $opt_name,
                 'letter-spacing' => true,
                 'color' => false,
                 'default'     => array(
-		            'font-size'   => '14px', 
+		            'font-size'   => '20px', 
                 	'letter-spacing' => '1px',
 		            'line-height' => '24px'
 		        ),
@@ -279,9 +279,9 @@ Redux::setSection( $opt_name,
                 'letter-spacing' => true,
                 'color' => false,
                 'default'     => array(
-		            'font-size'   => '14px', 
+		            'font-size'   => '17px', 
                 	'letter-spacing' => '1px',
-		            'line-height' => '24px'
+		            'line-height' => '21px'
 		        ),
             ),
             array(
@@ -302,9 +302,9 @@ Redux::setSection( $opt_name,
                 'letter-spacing' => true,
                 'color' => false,
                 'default'     => array(
-		            'font-size'   => '14px', 
+		            'font-size'   => '15px', 
                 	'letter-spacing' => '1px',
-		            'line-height' => '24px'
+		            'line-height' => '18px'
 		        ),
             ),
             array(
