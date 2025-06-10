@@ -53,9 +53,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	endif;
 
 	?>
-		</div>
 	</div>
 </div>
-<!-- .page-content -->
-</section>
-<!-- .no-results -->

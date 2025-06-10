@@ -111,3 +111,21 @@ Redux::setSection( $opt_name,
         ),
     )
 );
+
+Redux::setSection( $opt_name,
+    array(
+        'title'   => esc_html__( 'Sidebar Options', 'spexo' ),
+        'id'      => 'tmpcoder_sidebar_options',
+        'subsection' => true,
+        'heading' => '',
+        'fields'  => array(
+            array(
+                'id'       => 'tmpcoder_sidebar_customizer_note',
+                'type'     => 'raw',
+                'title'    => esc_html__( 'Sidebar Settings Location', 'spexo' ),
+                'subtitle' => esc_html__( 'Click the button below to edit sidebar settings via the WordPress Customizer.', 'spexo' ),
+                'content'  => '<a href="' . esc_url( admin_url( 'customize.php?autofocus[section]=tmpcoder_sidebar_settings' ) ) . '" class="button button-primary" target="_blank">' . esc_html__( 'Open Sidebar Settings in Customizer', 'spexo' ) . '</a>',
+            ),
+        ),
+    )
+);

@@ -12,3 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 tmpcoder_get_single_blog();
+
+
+

@@ -28,3 +28,33 @@ Redux::setSection( $opt_name,
     )
 );
 
+Redux::setSection( $opt_name, 
+    array(
+        'title'   => esc_html__( 'Custom JS', 'spexo' ),
+        'id'      => 'tmpcoder_custom_js_section',
+        'icon' => 'el el-file-edit',
+        'desc'    => __( 'Add custom JavaScript to the head or footer.', 'spexo' ),
+        'fields'  => array(
+            array(
+                'id'       => 'tmpcoder_custom_js_head',
+                'type'     => 'ace_editor',
+                'mode'     => 'javascript',
+                'title'    => __( 'Custom JS (Head)', 'spexo' ),
+                'subtitle' => __( 'To add your JavaScript code inside the &lt;head&gt; tag, enter it here. The code will be displayed within the &lt;head&gt; tag.', 'spexo' ),
+                'theme'    => 'chrome',
+                'desc'     => __( 'Do not include &lt;script&gt; tags. Just the JS code.', 'spexo' ),
+                'default'  => '',
+            ),
+            array(
+                'id'       => 'tmpcoder_custom_js_footer',
+                'type'     => 'ace_editor',
+                'mode'     => 'javascript',
+                'title'    => __( 'Custom JS (Footer)', 'spexo' ),
+                'subtitle' => __( 'To add your JavaScript code before the closing &lt;/body&gt; tag, enter it here. The code will be displayed just before the &lt;/body&gt; tag.', 'spexo' ),
+                'theme'    => 'chrome',
+                'desc'     => __( 'Do not include &lt;script&gt; tags. Just the JS code.', 'spexo' ),
+                'default'  => '',
+            ),
+        ),
+    )
+);

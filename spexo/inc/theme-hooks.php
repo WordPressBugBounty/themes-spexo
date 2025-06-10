@@ -274,6 +274,10 @@ if (!function_exists('tmpcoder_archive_markup')) {
     
     function tmpcoder_archive_markup()
     {
+
+        // For Archive page
+        $archive_sidebar = get_theme_mod( 'tmpcoder_archive_sidebar_position', 'no' );
+
         ?>
         <main id="content" class="site-main">
 
@@ -290,45 +294,61 @@ if (!function_exists('tmpcoder_archive_markup')) {
 
             ?>
 
-            <div class="page-content">
+            <div class="page-content tmpcoder-archive-layout-parent-<?php echo esc_attr( $archive_sidebar ); ?>">
+                <?php if ( $archive_sidebar === 'left' ) : ?>
+                <div class="tmpcoder-archive-sidebar-part-<?php echo esc_attr( $archive_sidebar ); ?>">
+                    <aside class="sidebar">
+                        <?php dynamic_sidebar( 'main-sidebar' ); ?>
+                    </aside>
+                </div>
+                <?php endif; ?>
+
+                <div class="blog-part tmpcoder-archive-layout-with-sidebar-<?php echo esc_attr( $archive_sidebar ); ?>">
                 
-                <div class="blog-part">
-                
-                <?php
-                /* Start the Loop */
-                while ( have_posts() ) :
-                    the_post();
+                    <?php
+                    /* Start the Loop */
+                    while ( have_posts() ) :
+                        the_post();
 
-                    /*
-                    * Include the Post-Type-specific template for the content.
-                    * If you want to override this in a child theme, then include a file
-                    * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-                    */
+                        /*
+                        * Include the Post-Type-specific template for the content.
+                        * If you want to override this in a child theme, then include a file
+                        * called content-___.php (where ___ is the Post Type name) and that will be used instead.
+                        */
 
-                    get_template_part( 'template-parts/content', get_post_type() );
+                        get_template_part( 'template-parts/content', get_post_type() );
 
-                endwhile;
+                    endwhile;
 
-                global $wp_query; // use wp prebuild variable
+                    global $wp_query; // use wp prebuild variable
 
-                if ( $wp_query->max_num_pages > 1 ) :
-                    $big = 999999999; // need an unlikely integer
-                    echo '<div class="blog-list-pagination">';
-                    echo wp_kses_post( paginate_links( array(
-                        'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-                        'format' => '?paged=%#%',
-                        'current' => max( 1, get_query_var('paged') ),
-                        'total' => $wp_query->max_num_pages,
-                        'type' => 'list',
-                        'prev_text' => '<i class="wp-previous-post fas fa-angle-left" aria-hidden="true"></i>',
-                        'next_text' => '<i class="wp-next-post fas fa-angle-right" aria-hidden="true"></i>',
-                        ) ) );
-                    echo '</div>';
-                    ?>
+                    if ( $wp_query->max_num_pages > 1 ) :
+                        $big = 999999999; // need an unlikely integer
+                        echo '<div class="blog-list-pagination">';
+                        echo wp_kses_post( paginate_links( array(
+                            'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                            'format' => '?paged=%#%',
+                            'current' => max( 1, get_query_var('paged') ),
+                            'total' => $wp_query->max_num_pages,
+                            'type' => 'list',
+                            'prev_text' => '<i class="wp-previous-post fas fa-angle-left" aria-hidden="true"></i>',
+                            'next_text' => '<i class="wp-next-post fas fa-angle-right" aria-hidden="true"></i>',
+                            ) ) );
+                        echo '</div>';
+                        ?>
 
-                <?php endif; ?> 
+                    <?php endif; ?> 
 
                 </div>
+
+                <?php if ( $archive_sidebar === 'right' ) : ?>
+                <div class="tmpcoder-archive-sidebar-part-<?php echo esc_attr( $archive_sidebar ); ?>">
+                    <aside class="sidebar">
+                        <?php dynamic_sidebar( 'main-sidebar' ); ?>
+                    </aside>
+                </div>
+                <?php endif; ?>
+
             </div>
                 
             <?php
@@ -338,7 +358,8 @@ if (!function_exists('tmpcoder_archive_markup')) {
                 get_template_part( 'template-parts/content', 'none' );
 
             endif;
-        ?>
+            ?>
+
         </main>
         <?php 
 
@@ -377,6 +398,8 @@ if ( !function_exists('tmpcoder_search_result_page_markup')) {
     
     function tmpcoder_search_result_page_markup(){
         
+        // For Search page
+        $search_sidebar = get_theme_mod( 'tmpcoder_search_sidebar_position', 'no' );
         ?>
 
         <main id="content" class="site-main">   
@@ -389,41 +412,52 @@ if ( !function_exists('tmpcoder_search_result_page_markup')) {
                     </h1>
                 </header>
             <?php endif; ?>
-            <div class="page-content">
+            <div class="page-content tmpcoder-archive-layout-parent-<?php echo esc_attr( $search_sidebar ); ?>">
                 
-                <div class="blog-part">
-                
-                <?php if ( have_posts() ) : ?>
+                <?php if ( $search_sidebar === 'left' ) : ?>
+                <div class="tmpcoder-archive-sidebar-part-<?php echo esc_attr( $search_sidebar ); ?>">
+                    <aside class="sidebar">
+                        <?php dynamic_sidebar( 'main-sidebar' ); ?>
+                    </aside>
+                </div>
+                <?php endif; ?>
 
-                    <?php
-                    /* Start the Loop */
-                    while ( have_posts() ) :
-                        the_post();
+                <div class="blog-part tmpcoder-archive-layout-with-sidebar-<?php echo esc_attr( $search_sidebar ); ?>">
+                    <?php if ( have_posts() ) : ?>
 
-                        /**
-                         * Run the loop for the search to output the results.
-                         * If you want to overload this in a child theme then include a file
-                         * called content-search.php and that will be used instead.
-                         */
-                        get_template_part( 'template-parts/content', 'search' );
+                        <?php
+                        /* Start the Loop */
+                        while ( have_posts() ) :
+                            the_post();
 
-                    endwhile;
-                    
-                    tmpcoder_posts_pagination();
+                            /**
+                             * Run the loop for the search to output the results.
+                             * If you want to overload this in a child theme then include a file
+                             * called content-search.php and that will be used instead.
+                             */
+                            get_template_part( 'template-parts/content', 'search' );
 
+                        endwhile;
+                        
+                        tmpcoder_posts_pagination();
+
+                        ?>
+
+                        <?php
+                    else :
+                        get_template_part( 'template-parts/content', 'none' );
+                    endif;
                     ?>
-
-                    <?php
-                else :
-
-                    get_template_part( 'template-parts/content', 'none' );
-
-                endif;
-                ?>
                 </div>
-                <div class="sidebar-part">
-                    <div class="blog-sidebar-default"><?php get_sidebar(); ?></div>
+                
+                <?php if ( $search_sidebar === 'right' ) : ?>
+                <div class="tmpcoder-archive-sidebar-part-<?php echo esc_attr( $search_sidebar ); ?>">
+                    <aside class="sidebar">
+                        <?php dynamic_sidebar( 'main-sidebar' ); ?>
+                    </aside>
                 </div>
+                <?php endif; ?>
+
             </div>
         </main>
 

@@ -4,7 +4,7 @@ Author: Spexo
 Requires at least: WordPress 4.7+
 Tested up to: WordPress 6.7
 Requires PHP: 7.4
-Version: 2.0.3
+Version: 2.0.4
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, e-commerce, news, portfolio, food-and-drink, one-column, custom-background, custom-colors, full-width-template, custom-menu, custom-logo, featured-images, sticky-post, theme-options, threaded-comments, translation-ready
@@ -69,6 +69,16 @@ Additional Font Metadata Source for WordPress Customizer Typography Options:
 
 
 == Changelog ==
+
+= 2.0.4 =
+* Added: Two custom JavaScript code fields in Theme Options – load JS in <head> and before </body> tag on frontend.
+  - Users can add JS code without <script> tags for safer script injection.
+* Added WordPress sidebar options in the Customizer for better layout control:
+  - Sidebar selection for Single Post pages.
+  - Sidebar selection for Archive pages.
+  - Sidebar selection for Search Results pages.
+* These enhancements improve theme flexibility and user control over page layouts and custom scripting.
+
 
 = 2.0.3 =
 * Added: Versatile Block Patterns for effortless design Hero Section, Featured Section, Banner, Post, and Teams Patterns for enhanced flexibility and creativity!

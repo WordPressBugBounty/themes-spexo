@@ -40,7 +40,113 @@ class Tmpcoder_Main_Class
         add_filter( 'body_class', array($this, 'tmpcoder_import_demo_body_class') );
 
         add_action( 'tmpcoder_wp_body_open', array($this,'tmpcoder_load_preloder') );
+
+        add_action( 'widgets_init', [$this, 'tmpcoder_register_sidebar'] );
+
+        add_action( 'customize_register', [$this, 'tmpcoder_customize_register'] );
+
+        add_action('wp_enqueue_scripts', [$this, 'tmpcoder_enqueue_custom_js']);
     }
+
+    public function tmpcoder_enqueue_custom_js() {
+
+        wp_register_script('tmpcoder-custom-js-head', '', ['jquery'], null, false); // Load in head
+        wp_register_script('tmpcoder-custom-js-footer', '', ['jquery'], null, true); // Load in footer
+
+        wp_enqueue_script('tmpcoder-custom-js-head');
+        wp_enqueue_script('tmpcoder-custom-js-footer');
+
+        // Head JS injection
+        if (Tmpcoder_Site_Settings::tmpcoder_has('tmpcoder_custom_js_head')) {
+            $js_head = Tmpcoder_Site_Settings::tmpcoder_get('tmpcoder_custom_js_head');
+            if (!empty($js_head)) {
+                wp_add_inline_script('tmpcoder-custom-js-head', $js_head);
+            }
+        }
+
+        // Footer JS injection
+        if (Tmpcoder_Site_Settings::tmpcoder_has('tmpcoder_custom_js_footer')) {
+            $js_footer = Tmpcoder_Site_Settings::tmpcoder_get('tmpcoder_custom_js_footer');
+            if (!empty($js_footer)) {
+                wp_add_inline_script('tmpcoder-custom-js-footer', $js_footer);
+            }
+        }
+    }
+
+    function tmpcoder_customize_register( $wp_customize ) {
+
+        $wp_customize->add_section( 'tmpcoder_sidebar_settings', array(
+            'title'    => __( 'Sidebar Settings', 'spexo' ),
+            'priority' => 30,
+        ) );
+
+        $wp_customize->add_setting( 'tmpcoder_sidebar_position', array(
+            'default'           => 'no',
+            'sanitize_callback' => 'sanitize_text_field',
+        ) );
+
+        $wp_customize->add_control( 'tmpcoder_sidebar_position', array(
+            'label'    => __( 'Single Blog Sidebar Position', 'spexo' ),
+            'section'  => 'tmpcoder_sidebar_settings',
+            'settings' => 'tmpcoder_sidebar_position',
+            'type'     => 'select',
+            'choices'  => array(
+                'no'    => __( 'No Sidebar', 'spexo' ),
+                'right' => __( 'Right Sidebar', 'spexo' ),
+                'left'  => __( 'Left Sidebar', 'spexo' ),
+            ),
+        ) );
+
+        // Archive Page Sidebar Position (new)
+        $wp_customize->add_setting( 'tmpcoder_archive_sidebar_position', array(
+            'default'           => 'no',
+            'sanitize_callback' => 'sanitize_text_field',
+        ) );
+
+        $wp_customize->add_control( 'tmpcoder_archive_sidebar_position', array(
+            'label'    => __( 'Archive Page Sidebar Position', 'spexo' ),
+            'section'  => 'tmpcoder_sidebar_settings',
+            'settings' => 'tmpcoder_archive_sidebar_position',
+            'type'     => 'select',
+            'choices'  => array(
+                'no'    => __( 'No Sidebar', 'spexo' ),
+                'right' => __( 'Right Sidebar', 'spexo' ),
+                'left'  => __( 'Left Sidebar', 'spexo' ),
+            ),
+        ) );
+
+        // Search Page Sidebar Position (new)
+        $wp_customize->add_setting( 'tmpcoder_search_sidebar_position', array(
+            'default'           => 'no',
+            'sanitize_callback' => 'sanitize_text_field',
+        ) );
+
+        $wp_customize->add_control( 'tmpcoder_search_sidebar_position', array(
+            'label'    => __( 'Search Page Sidebar Position', 'spexo' ),
+            'section'  => 'tmpcoder_sidebar_settings',
+            'settings' => 'tmpcoder_search_sidebar_position',
+            'type'     => 'select',
+            'choices'  => array(
+                'no'    => __( 'No Sidebar', 'spexo' ),
+                'right' => __( 'Right Sidebar', 'spexo' ),
+                'left'  => __( 'Left Sidebar', 'spexo' ),
+            ),
+        ) );
+    }
+
+    function tmpcoder_register_sidebar() {
+
+        register_sidebar( array(
+            'name'          => __( 'Main Sidebar', 'spexo' ),
+            'id'            => 'main-sidebar',
+            'description'   => __( 'Sidebar for blog detail pages.', 'spexo' ),
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h3 class="widget-title">',
+            'after_title'   => '</h3>',
+        ) );
+    }
+
 
     function tmpcoder_load_preloder(){
 
@@ -389,12 +495,25 @@ function tmpcoder_get_blog_list()
 function tmpcoder_get_single_blog()
 {
 
+    $sidebar_position = get_theme_mod( 'tmpcoder_sidebar_position', 'on' ); 
+
     ?>
-    <div class="page-content">
-        <div class="blog-detail-img">
-            <?php the_post_thumbnail('full') ?>
-        </div>
-        <div class="blog-detail-content">
+
+    <div class="page-content tmpcoder-blog-sidebar-<?php echo esc_attr( $sidebar_position ); ?>">
+
+        <?php if ( $sidebar_position === 'left' ) : ?>
+            <div class="tmpcoder-single-blog-sidebar-part">
+                <aside class="sidebar">
+                    <?php dynamic_sidebar( 'main-sidebar' ); ?>
+                </aside>
+            </div>
+        <?php endif; ?>
+
+        <div class="tmpcoder-single-blog-content-part">
+            <div class="blog-detail-img">
+                <?php the_post_thumbnail('full') ?>
+            </div>
+            <div class="blog-detail-content">
             <h1><?php the_title() ?></h1>
             <ul class="blog-date blog-meta-options">
                 <?php 
@@ -425,74 +544,84 @@ function tmpcoder_get_single_blog()
             <div class="blog-detail-description">
                 <?php the_content() ?>
             </div>
-        </div>
         
-        <?php 
-        $tags_list = tmpcoder_show_tags();
-        if ( $tags_list != "" ){ ?>
-        <div class="wp-post-tags">
-            <span class="wp-tag-label"><?php echo esc_html('Tags:'); ?></span>
-            <?php echo wp_kses_post($tags_list); ?>
-        </div>
-        <?php } ?>
-
-        <div class="post-authr-box">
             <?php 
-            $post_id = get_the_ID();
-            $author_id =  get_post_field( 'post_author', $post_id );
-            $avatar = get_avatar( $author_id, 264 );
-            $name = get_the_author_meta( 'display_name', $author_id);            
-            $title = '';
-            $biography = get_the_author_meta( 'description', $author_id );
-            $website = '';
+            $tags_list = tmpcoder_show_tags();
+            if ( $tags_list != "" ){ ?>
+            <div class="wp-post-tags">
+                <span class="wp-tag-label"><?php echo esc_html('Tags:'); ?></span>
+                <?php echo wp_kses_post($tags_list); ?>
+            </div>
+            <?php } ?>
 
-            echo '<div class="tmpcoder-author-box">';
+            <div class="post-authr-box">
+                <?php 
+                $post_id = get_the_ID();
+                $author_id =  get_post_field( 'post_author', $post_id );
+                $avatar = get_avatar( $author_id, 264 );
+                $name = get_the_author_meta( 'display_name', $author_id);            
+                $title = '';
+                $biography = get_the_author_meta( 'description', $author_id );
+                $website = '';
 
-            // Avatar
-            if ( false !== $avatar ) {
-                echo '<div class="tmpcoder-author-box-image">';
+                echo '<div class="tmpcoder-author-box">';
+
+                // Avatar
+                if ( false !== $avatar ) {
+                    echo '<div class="tmpcoder-author-box-image">';
+                        if ( $website != '' ) {
+                            echo '<a href="'. esc_url( $website ) .'">'. wp_kses_post($avatar) .'</a>';
+                        } else {
+                            echo wp_kses_post($avatar);
+                        }
+                    echo '</div>';
+                }
+
+                // Wrap All Text Blocks
+                echo '<div class="tmpcoder-author-box-text">';
+                
+                // Author Name
+                if ( '' !== $name ) {
+                    echo '<h3 class="tmpcoder-author-box-name">';
                     if ( $website != '' ) {
-                        echo '<a href="'. esc_url( $website ) .'">'. wp_kses_post($avatar) .'</a>';
-                    } else {
-                        echo wp_kses_post($avatar);
-                    }
+                            echo '<a href="'. esc_url( $website ) .'">'. esc_html($name) .'</a>';
+                        } else {
+                            echo esc_html($name);
+                        }
+                    echo '</h3>';
+                }
+
+                if ( '' !== $biography ) {
+                    echo '<p class="tmpcoder-author-box-bio">'. wp_kses_post($biography) .'</p>';
+                }
+
+                echo '</div>'; // End .tmpcoder-author-box-text
+
                 echo '</div>';
-            }
+                ?>
+                
+            </div>
 
-            // Wrap All Text Blocks
-            echo '<div class="tmpcoder-author-box-text">';
-            
-            // Author Name
-            if ( '' !== $name ) {
-                echo '<h3 class="tmpcoder-author-box-name">';
-                if ( $website != '' ) {
-                        echo '<a href="'. esc_url( $website ) .'">'. esc_html($name) .'</a>';
-                    } else {
-                        echo esc_html($name);
-                    }
-                echo '</h3>';
-            }
+            <?php 
+                
+            if ( comments_open() || get_comments_number() ) :
+                comments_template(); 
+            endif;
 
-            if ( '' !== $biography ) {
-                echo '<p class="tmpcoder-author-box-bio">'. wp_kses_post($biography) .'</p>';
-            }
+            do_action('tmpcoder_blog_related_posts');
 
-            echo '</div>'; // End .tmpcoder-author-box-text
+            echo "</div>";
+        echo "</div>";
 
-        echo '</div>';
-            ?>
-            
+        if ( $sidebar_position === 'right' ) : ?>
+        <div class="tmpcoder-single-blog-sidebar-part">
+            <aside class="sidebar">
+                <?php dynamic_sidebar( 'main-sidebar' ); ?>
+            </aside>
         </div>
-
-        <?php 
-            
-        if ( comments_open() || get_comments_number() ) :
-            comments_template(); 
-        endif;
+        <?php endif;
 
     echo '</div>';
-
-    do_action('tmpcoder_blog_related_posts');
 }
 
 /*

@@ -2687,6 +2687,10 @@ html {
       border: unset;
   }
   
+  body.search-no-results .site-main .blog-part {
+      display: block;
+  }
+
   body .site-main .blog-part {
       display: flex;
       flex-wrap: wrap;
@@ -3303,3 +3307,134 @@ body .wp-block-query ul li.wp-block-post .wp-block-group {
 .section-heading.text-center{
   text-align: center;
 }
+
+
+/* Single blog, archive & search page sidebar css - start */
+
+body.single-post .page-content {
+  display: flex;
+} 
+
+body.single-post .tmpcoder-blog-sidebar-right .tmpcoder-single-blog-content-part, body.single-post .tmpcoder-blog-sidebar-left .tmpcoder-single-blog-content-part {
+  width: 70%;
+}
+
+body.single-post .page-content .tmpcoder-single-blog-sidebar-part {
+  width: 25%;
+}
+
+body.single-post .page-content .tmpcoder-single-blog-sidebar-part ul {
+  padding:0; 
+}
+
+body.single-post .tmpcoder-blog-sidebar-right .tmpcoder-single-blog-sidebar-part {
+  /*padding-left: 60px;*/
+}
+
+/* ======= Base Layout ======= */
+.page-content.tmpcoder-blog-sidebar-left,
+.page-content.tmpcoder-blog-sidebar-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+/* ======= Mobile Responsive ======= */
+
+@media (max-width: 1024px) {
+  body.single-post .page-content .tmpcoder-single-blog-sidebar-part,
+  body.single-post .page-content .tmpcoder-single-blog-content-part {
+    width: 100%;
+  }
+
+  /*body.single-post .page-content .tmpcoder-single-blog-content-part*/
+
+  body.single-post .page-content.tmpcoder-blog-sidebar-left,
+  body.single-post .page-content.tmpcoder-blog-sidebar-right {
+    flex-direction: column;
+  }
+
+  body.single-post .page-content.tmpcoder-blog-sidebar-left .tmpcoder-single-blog-sidebar-part,
+  body.single-post .page-content.tmpcoder-blog-sidebar-right .tmpcoder-single-blog-sidebar-part {
+    padding: 0;
+  }
+}
+
+/* Desktop: Sidebar and content side by side */
+.tmpcoder-archive-layout-parent-left,.tmpcoder-archive-layout-parent-right {
+  display: flex;
+  gap: 30px; /* space between sidebar and content */
+  align-items: flex-start;
+}
+
+/* Sidebar container width */
+.tmpcoder-archive-sidebar-part-left,
+.tmpcoder-archive-sidebar-part-right {
+  flex: 0 0 300px; /* fixed width sidebar */
+  max-width: 300px;
+}
+
+/* Blog content takes remaining space */
+.blog-part.tmpcoder-archive-layout-with-sidebar-left,
+.blog-part.tmpcoder-archive-layout-with-sidebar-right {
+  flex: 1 1 auto;
+}
+
+/* Tablet: Stack both sidebar and content vertically full width */
+@media (max-width: 1024px) {
+  .tmpcoder-archive-layout-parent-left,.tmpcoder-archive-layout-parent-right {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .tmpcoder-archive-sidebar-part-left,
+  .tmpcoder-archive-sidebar-part-right,
+  .blog-part.tmpcoder-archive-layout-with-sidebar-left,
+  .blog-part.tmpcoder-archive-layout-with-sidebar-right {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .tmpcoder-archive-layout-parent-left .blog-part.tmpcoder-archive-layout-with-sidebar-left,.tmpcoder-archive-layout-parent-right .blog-part.tmpcoder-archive-layout-with-sidebar-right{
+    margin: unset;
+  }
+}
+
+/* Responsive: Mobile */
+@media (max-width: 767px) {
+  /* Stack vertically */
+  .tmpcoder-archive-layout-parent-left, .tmpcoder-archive-layout-parent-right {
+    flex-direction: column;
+  }
+
+  .tmpcoder-archive-layout-parent-left .blog-part.tmpcoder-archive-layout-with-sidebar-left,.tmpcoder-archive-layout-parent-right .blog-part.tmpcoder-archive-layout-with-sidebar-right{
+    margin: unset;
+  }
+
+  .tmpcoder-archive-sidebar-part-left,
+  .tmpcoder-archive-sidebar-part-right {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 30px; /* space below sidebar */
+  }
+
+  .blog-part.tmpcoder-archive-layout-with-sidebar-left,
+  .blog-part.tmpcoder-archive-layout-with-sidebar-right {
+    width: 100%;
+  }
+}
+
+body .site-main .page-content .sidebar .widget ol, body .site-main .page-content .sidebar .widget ul {
+  padding: 0;
+  margin: 0;
+}
+
+body .site-main .page-content .sidebar .widget li {
+  list-style: none;
+}
+body .site-main .page-content .sidebar .widget ul li:before {
+  content: '> ';
+}
+
+/* Single blog, archive & search page sidebar css - end */
