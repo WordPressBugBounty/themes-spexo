@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div class="col-md-12 wow fadeInUp animated">
+<div class="col-md-12 wow fadeInUp animated spexo-nothing-found-content">
 	<div class="section-heading text-center">
 		<h2 class="heading-title"><?php esc_html_e( 'Nothing Found','spexo' ); ?></h2>
 

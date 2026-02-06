@@ -4,7 +4,7 @@ Author: Spexo
 Requires at least: WordPress 4.7+
 Tested up to: WordPress 6.7
 Requires PHP: 7.4
-Version: 2.0.4
+Version: 2.0.6
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, e-commerce, news, portfolio, food-and-drink, one-column, custom-background, custom-colors, full-width-template, custom-menu, custom-logo, featured-images, sticky-post, theme-options, threaded-comments, translation-ready
@@ -69,6 +69,23 @@ Additional Font Metadata Source for WordPress Customizer Typography Options:
 
 
 == Changelog ==
+
+= 2.0.6 =
+Enhanced : The "Nothing Found" page by improving the banner title and description styling with additional CSS for a more polished look.
+
+= 2.0.5 =
+* Added: New Pricing Three Column Block Pattern
+  - Professional three-column pricing layout with highlighted Pro Plan
+  - Features circle-check SVG icons for feature lists
+  - Responsive design with proper visual hierarchy
+  - Consistent with theme's design system and color scheme
+
+* Optimization: Enhanced JavaScript and CSS performance
+  - Improved code minification and compression
+  - Optimized asset loading for faster page speeds
+
+* Enhancement: Improved Product Grid styling support 
+	- Grid Styles now adapt dynamically based on Customizer options. 
 
 = 2.0.4 =
 * Added: Two custom JavaScript code fields in Theme Options – load JS in <head> and before </body> tag on frontend.

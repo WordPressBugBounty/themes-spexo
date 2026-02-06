@@ -46,6 +46,44 @@ class Tmpcoder_Main_Class
         add_action( 'customize_register', [$this, 'tmpcoder_customize_register'] );
 
         add_action('wp_enqueue_scripts', [$this, 'tmpcoder_enqueue_custom_js']);
+
+        add_filter( 'loop_shop_columns', [$this, 'spexo_woocommerce_products_per_row'] );
+
+        add_action( 'customize_register', [$this, 'spexo_custom_customize_register'] );
+    }
+
+    function spexo_woocommerce_products_per_row( $columns ) {
+        // Check if a custom setting exists (set default as 4)
+        $user_defined_columns = get_theme_mod( 'products_per_row', 4 ); // Default to 4
+
+        // Limit to a max of 6 products per row
+        if ( $user_defined_columns > 6 ) {
+            $user_defined_columns = 6;
+        }
+
+        return $user_defined_columns;
+    }
+
+    // Register the customizer setting for products per row
+    function spexo_custom_customize_register( $wp_customize ) {
+        if ( class_exists( 'WooCommerce' ) ) {
+            $wp_customize->add_setting( 'products_per_row', array(
+                'default' => 4,
+                'sanitize_callback' => 'absint',
+                'transport' => 'refresh',
+            ));
+
+            $wp_customize->add_control( 'products_per_row', array(
+                'label' => __( 'Products per Row', 'spexo' ),
+                'section' => 'woocommerce_product_catalog',
+                'type' => 'number',
+                'input_attrs' => array(
+                    'min' => 1,
+                    'max' => 6,
+                    'step' => 1,
+                ),
+            ));
+        }
     }
 
     public function tmpcoder_enqueue_custom_js() {

@@ -169,3 +169,18 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 });
+
+/*----- One page page scrolling -----*/
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.location.hash) {
+    const hash = window.location.hash;
+    const target = document.querySelector(hash);
+
+    if (target) {
+      // Add small delay to wait until full page loads
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
+  }
+});

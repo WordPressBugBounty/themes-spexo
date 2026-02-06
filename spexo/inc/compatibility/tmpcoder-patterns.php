@@ -41,6 +41,7 @@ if ( ! class_exists( 'Tmpcoder_block_patterns' ) ) {
             'three-column-featured-grid',
             'teams-three-columns',
             'teams-four-columns-circle',
+            'pricing-three-column',
         ];
     
     

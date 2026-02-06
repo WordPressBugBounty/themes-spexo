@@ -89,7 +89,16 @@ add_action('redux/'.TMPCODER_THEME_OPTION_NAME.'/panel/before','tmpcoder_heading
 function tmpcoder_heading_markup(){
     
     if ( function_exists( 'tmpcoder_render_admin_header' ) ) {
-        tmpcoder_render_admin_header(get_template_directory_uri() . '/assets/images/logo.png', 'global-options');
+
+        if( defined('TMPCODER_PRO_ADDONS_ASSETS_URL') ) {
+            $main_header_logo = TMPCODER_PRO_ADDONS_ASSETS_URL.'images/spexo-logo-web-pro.svg';
+        } else if(defined('TMPCODER_ADDONS_ASSETS_URL')) {
+            $main_header_logo = TMPCODER_ADDONS_ASSETS_URL.'images/spexo-logo-web.svg';
+        } else {
+            $main_header_logo = get_template_directory_uri().'/assets/images/logo.png';
+        }
+
+        tmpcoder_render_admin_header($main_header_logo, 'global-options');
     }
 } 
 
