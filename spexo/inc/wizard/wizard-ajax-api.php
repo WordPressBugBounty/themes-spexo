@@ -1,232 +1,329 @@
 <?php 
 
-add_action("wp_ajax_tmpcoder_get_recommended_plugins", "tmpcoder_get_recommended_plugins");
-add_action("wp_ajax_nopriv_tmpcoder_get_recommended_plugins", "tmpcoder_get_recommended_plugins");
-function tmpcoder_get_recommended_plugins(){
-
-    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'tmpcoder_get_plugins') ) {
-    	exit; // Get out of here, the nonce is rotten!
+if ( ! function_exists( 'tmpcoder_theme_wizard_is_one_step_flow_enabled' ) ) {
+    /**
+     * Phase 1 contract: one-step wizard flow is the default path.
+     *
+     * @return bool
+     */
+    function tmpcoder_theme_wizard_is_one_step_flow_enabled() {
+        return (bool) apply_filters( 'tmpcoder_theme_wizard_one_step_flow_enabled', true );
     }
-    
-    if ( ! is_user_logged_in() ){
-        esc_html_e("You must log in to site setup", 'spexo');
-        die();
+}
+
+if ( ! function_exists( 'tmpcoder_theme_wizard_target_plugin_file' ) ) {
+    /**
+     * Addon activation gate plugin file.
+     *
+     * @return string
+     */
+    function tmpcoder_theme_wizard_target_plugin_file() {
+        return 'sastra-essential-addons-for-elementor/sastra-essential-addons-for-elementor.php';
     }
+}
 
-    $tgmpaClass = $GLOBALS['tgmpa'];
-    $plugins = array();
-    $next_step = __('Next', 'spexo');
-    $activated_plugin = [];
+if ( ! function_exists( 'tmpcoder_theme_wizard_setup_plugin_files' ) ) {
+    /**
+     * Canonical plugin basenames for the theme wizard one-step flow (install order).
+     *
+     * Order: Elementor → Redux Framework → Spexo Addon for Elementor.
+     *
+     * @return string[]
+     */
+    function tmpcoder_theme_wizard_setup_plugin_files() {
+        return array(
+            'elementor/elementor.php',
+            'redux-framework/redux-framework.php',
+            tmpcoder_theme_wizard_target_plugin_file(),
+        );
+    }
+}
 
-    if ( is_object($tgmpaClass) ){
-        if ( empty($tgmpaClass->plugins) ){
-            $tmpcoder_mainClass = new Tmpcoder_Main_Class();
-            $tmpcoder_mainClass->tmpcoder_require_plugins();
-            $tgmpaClass = $GLOBALS['tgmpa'];
+if ( ! function_exists( 'tmpcoder_theme_wizard_get_setup_plugin_jobs' ) ) {
+    /**
+     * Ordered install/activate jobs for the one-step wizard (WordPress.org / repo plugins).
+     *
+     * Uses canonical plugin basenames — not TGMPA's {@see _get_plugin_basename_from_slug()} output,
+     * which is only a bare slug when the plugin is not yet installed.
+     *
+     * @return array<int, array{slug:string,file_path:string,name:string}>
+     */
+    function tmpcoder_theme_wizard_get_setup_plugin_jobs() {
+        $file_labels = array(
+            'elementor/elementor.php'                     => __( 'Elementor', 'spexo' ),
+            'redux-framework/redux-framework.php'         => __( 'Redux Framework', 'spexo' ),
+            tmpcoder_theme_wizard_target_plugin_file()   => __( 'Spexo Addons for Elementor', 'spexo' ),
+        );
+
+        $jobs = array();
+        foreach ( tmpcoder_theme_wizard_setup_plugin_files() as $file_path ) {
+            if ( ! is_string( $file_path ) || '' === $file_path ) {
+                continue;
+            }
+            $slug = dirname( $file_path );
+            if ( '' === $slug || '.' === $slug ) {
+                continue;
+            }
+            $jobs[] = array(
+                'slug'       => $slug,
+                'file_path'  => $file_path,
+                'name'       => isset( $file_labels[ $file_path ] ) ? $file_labels[ $file_path ] : $slug,
+            );
         }
 
-        if ( !empty($tgmpaClass->plugins) ) {
-            foreach( $tgmpaClass->plugins as $plugKey => $plugin ){
-                $image = '';
-                $plugin_info = wp_remote_get('https://api.wordpress.org/plugins/info/1.0/'.$plugKey.'.json?fields=banners,icons');
+        return $jobs;
+    }
+}
 
-                if ( is_array( $plugin_info ) && ! is_wp_error( $plugin_info ) ) {
-                    $body    = json_decode($plugin_info['body'], true);
-                    if ( isset($body['icons']) ){
-                        if ( isset($body['icons']['svg']) ){
-                            $image = $body['icons']['svg'];
-                        }else if ( isset($body['icons']['2x']) ){
-                            $image = $body['icons']['2x'];
-                        }else if ( isset($body['icons']['1x']) ){
-                            $image = $body['icons']['1x'];
-                        }else{
-                            $image = $body['icons']['default'];
-                        }
-                    }
-                }
+if ( ! function_exists( 'tmpcoder_theme_wizard_setup_redirect_url' ) ) {
+    /**
+     * Redirect target for successful one-step flow.
+     *
+     * @return string
+     */
+    function tmpcoder_theme_wizard_setup_redirect_url() {
+        return admin_url( 'admin.php?page=tmpcoder-setup-wizard' );
+    }
+}
 
-                $plugin['image'] = $image;
-                $plugin['link'] = 'https://wordpress.org/plugins/'. $plugin['slug'];
+if ( ! function_exists( 'tmpcoder_theme_wizard_is_target_plugin_active' ) ) {
+    /**
+     * Check whether the required Spexo addon plugin is active.
+     *
+     * @return bool
+     */
+    function tmpcoder_theme_wizard_is_target_plugin_active() {
+        return tmpcoder_theme_wizard_is_plugin_marked_active( tmpcoder_theme_wizard_target_plugin_file() );
+    }
+}
 
-                // modify these variables with your new/old plugin values
-                $plugin_slug = $plugin['slug'];
-                $plugin_file_path = $plugin['file_path'];
-
-                if (is_plugin_active($plugin_file_path)) {
-                    array_push($activated_plugin, $plugin_slug);
-                }
-                
-                if ( tmpcoder_is_plugin_installed( $plugin_file_path ) && in_array($plugin_file_path, apply_filters('active_plugins', get_option('active_plugins'))) ){
-                    $plugin['activated'] = true;
-                }else if ( tmpcoder_is_plugin_installed( $plugin_file_path ) ) {
-                    $plugin['installed'] = true;
-                    $next_step = __('Install & Activate', 'spexo');
-                }else{
-                    $next_step = __('Install & Activate', 'spexo');
-                }
-                array_push($plugins, $plugin);
-            }
-
-            $skip_this = false;
-            if (count($activated_plugin) == 3) {
-                $skip_this = true;
-                update_option(TMPCODER_THEME_SLUG.'_wizard_step', '2');
+if ( ! function_exists( 'tmpcoder_theme_wizard_are_setup_plugins_active' ) ) {
+    /**
+     * Whether every plugin required by the one-step theme wizard is active.
+     *
+     * @return bool
+     */
+    function tmpcoder_theme_wizard_are_setup_plugins_active() {
+        foreach ( tmpcoder_theme_wizard_setup_plugin_files() as $plugin_file ) {
+            if ( ! tmpcoder_theme_wizard_is_plugin_marked_active( $plugin_file ) ) {
+                return false;
             }
         }
+        return true;
     }
+}
 
-    if ( !empty($plugins) ){
-        update_option(TMPCODER_THEME_SLUG.'_wizard_step', '1');
-        wp_send_json_success(
+if ( ! function_exists( 'tmpcoder_theme_wizard_is_plugin_marked_active' ) ) {
+    /**
+     * Theme-check-safe active plugin lookup.
+     *
+     * @param string $plugin_file Plugin base file path.
+     * @return bool
+     */
+    function tmpcoder_theme_wizard_is_plugin_marked_active( $plugin_file ) {
+        $active_plugins = (array) get_option( 'active_plugins', array() );
+        if ( in_array( $plugin_file, $active_plugins, true ) ) {
+            return true;
+        }
+
+        if ( is_multisite() ) {
+            $network_active_plugins = (array) get_site_option( 'active_sitewide_plugins', array() );
+            if ( isset( $network_active_plugins[ $plugin_file ] ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+if ( ! function_exists( 'tmpcoder_theme_wizard_can_manage_setup' ) ) {
+    /**
+     * Centralized setup capability check.
+     *
+     * @return bool
+     */
+    function tmpcoder_theme_wizard_can_manage_setup() {
+        return is_user_logged_in() && current_user_can( 'install_plugins' );
+    }
+}
+
+if ( ! function_exists( 'tmpcoder_theme_wizard_send_auth_error' ) ) {
+    /**
+     * Standard auth/capability error response.
+     *
+     * @return void
+     */
+    function tmpcoder_theme_wizard_send_auth_error() {
+        wp_send_json_error(
             array(
-                'plugins'=> $plugins,
-                'message'=> __('Plugins getting successfully.','spexo'),
-                'next_step'=> $next_step,
-                'skip_this' => $skip_this
+                'message' => __( 'You do not have permission to run theme setup.', 'spexo' ),
             )
         );
-    }else{
-        $error = __('No recommended plugins found','spexo');
-        wp_send_json_error(array('message'=> $error ));
     }
 }
 
-add_action("wp_ajax_tmpcoder_install_recommended_plugins", "tmpcoder_install_recommended_plugins");
-add_action("wp_ajax_nopriv_tmpcoder_install_recommended_plugins", "tmpcoder_install_recommended_plugins");
-function tmpcoder_install_recommended_plugins(){
+if ( ! function_exists( 'tmpcoder_theme_wizard_get_tgmpa_plugins' ) ) {
+    /**
+     * Get registered TGMPA plugins for the wizard.
+     *
+     * @return array
+     */
+    function tmpcoder_theme_wizard_get_tgmpa_plugins() {
+        $tgmpa_class = isset( $GLOBALS['tgmpa'] ) ? $GLOBALS['tgmpa'] : null;
 
-    // Check if nonce is valid.
-    if ( ! isset($_POST['_wpnonce']) || ! wp_verify_nonce(sanitize_text_field(wp_unslash ($_POST['_wpnonce'])), 'tmpcoder_install_plugins' ) ) {
-        exit;
-    }
-    
-    if ( ! is_user_logged_in() ){
-        esc_html_e("You must log in to site setup", 'spexo');
-        die();
-    }
-
-    $plugins = '';
-    if ( isset($_POST['plugins']) && is_array($_POST['plugins']) ) {
-        $plugins = array_map('sanitize_text_field',wp_unslash($_POST['plugins']));
-    }
-
-    $tgmpaClass = $GLOBALS['tgmpa'];
-    $error = array();
-
-    ob_start(); // default print off
-
-    if ( is_object($tgmpaClass) ){
-        if ( empty($tgmpaClass->plugins) ){
-            $tmpcoder_mainClass = new Tmpcoder_Main_Class();
-            $tmpcoder_mainClass->tmpcoder_require_plugins();
-            $tgmpaClass = $GLOBALS['tgmpa'];
+        if ( is_object( $tgmpa_class ) && ! empty( $tgmpa_class->plugins ) ) {
+            return $tgmpa_class->plugins;
         }
 
-        if ( !empty($tgmpaClass->plugins) ) {
-            foreach( $tgmpaClass->plugins as $plugKey => $plugin ){
+        $tmpcoder_main_class = new Tmpcoder_Main_Class();
+        $tmpcoder_main_class->tmpcoder_require_plugins();
+        $tgmpa_class = isset( $GLOBALS['tgmpa'] ) ? $GLOBALS['tgmpa'] : null;
 
-                if ( isset($plugins[$plugKey]) && $plugins[$plugKey] == '1' ){
+        return ( is_object( $tgmpa_class ) && ! empty( $tgmpa_class->plugins ) ) ? $tgmpa_class->plugins : array();
+    }
+}
 
-                    // modify these variables with your new/old plugin values
-                    $plugin_slug = $plugin['slug'];
-                    $plugin_file_path = $plugin['file_path'];
-                    
-                    // echo 'Check if new plugin is already installed - ';
-                    if ( tmpcoder_is_plugin_installed( $plugin_file_path ) ) {
-                        tmpcoder_update_plugin( $plugin_file_path );
-                        $installed = true;
+if ( ! function_exists( 'tmpcoder_theme_wizard_install_and_activate_plugin' ) ) {
+    /**
+     * Install/update and activate one plugin (repo) using canonical basename and folder slug.
+     *
+     * @param array $plugin Must include `file_path` (e.g. elementor/elementor.php). `slug` optional (defaults to directory of file_path).
+     * @return true|WP_Error
+     */
+    function tmpcoder_theme_wizard_install_and_activate_plugin( $plugin ) {
+        if ( empty( $plugin['file_path'] ) || ! is_string( $plugin['file_path'] ) ) {
+            return new WP_Error( 'invalid_plugin_data', __( 'Invalid plugin data provided.', 'spexo' ) );
+        }
 
-                    } else {
-                        $plugin_zip = $tgmpaClass->get_download_url($plugin_slug);
+        $plugin_file_path = $plugin['file_path'];
+        $plugin_slug      = ! empty( $plugin['slug'] ) && is_string( $plugin['slug'] ) ? $plugin['slug'] : dirname( $plugin_file_path );
 
-                        $installed = tmpcoder_install_plugin( $plugin_slug );
-                    }
+        if ( '' === $plugin_slug || '.' === $plugin_slug ) {
+            return new WP_Error( 'invalid_plugin_data', __( 'Invalid plugin data provided.', 'spexo' ) );
+        }
 
-                    if ( !is_wp_error( $installed ) && $installed ) {
+        $resolved_path = tmpcoder_plugin_basefile_path( $plugin_slug );
+        $on_disk_path   = ! empty( $resolved_path )
+            ? $resolved_path
+            : ( tmpcoder_is_plugin_installed( $plugin_file_path ) ? $plugin_file_path : '' );
 
-                        $plugin_file_path = tmpcoder_plugin_basefile_path($plugin_slug);
-
-                        // echo 'Activating new plugin.';
-                        $activate = activate_plugin( $plugin_file_path );
-                       
-                        if ( is_wp_error( $activate ) ){
-                            $error[] = $plugin['name'].': '.$activate->get_error_message();
-                        }
-                        
-                    } else {
-                        $error[] = $plugin['name'];
-                    }
-                }
+        if ( '' !== $on_disk_path ) {
+            tmpcoder_update_plugin( $on_disk_path );
+        } else {
+            $installed = tmpcoder_install_plugin( $plugin_slug );
+            if ( is_wp_error( $installed ) ) {
+                return $installed;
+            }
+            if ( false === $installed || null === $installed ) {
+                return new WP_Error( 'plugin_install_failed', __( 'Plugin installation failed.', 'spexo' ) );
             }
         }
-    }
 
-    ob_end_clean();
+        $resolved_path = tmpcoder_plugin_basefile_path( $plugin_slug );
+        if ( empty( $resolved_path ) ) {
+            return new WP_Error( 'plugin_file_not_found', __( 'Installed plugin file not found.', 'spexo' ) );
+        }
 
-    echo "  ";
-    echo "00000";
+        if ( ! tmpcoder_theme_wizard_is_plugin_marked_active( $resolved_path ) ) {
+            $activate = activate_plugin( $resolved_path );
+            if ( is_wp_error( $activate ) ) {
+                return $activate;
+            }
+        }
 
-    if ( empty($error) ){
-        update_option(TMPCODER_THEME_SLUG.'_wizard_step', '2');
-        update_option('sastra_addons_wizard_page', 1);
-        update_option('spexo_addons_wizard_page', 1);
-
-        echo wp_json_encode( array('success'=> true, 'data' => array("message"=> __('All recommended plugins installed & activated successfully.','spexo') ) ) );
-        exit;
-
-    }else{
-        $error = implode(', ', $error). __(' Could not install','spexo');
-        wp_send_json_error(array('message'=> $error ));
+        return true;
     }
 }
 
-add_action("wp_ajax_tmpcoder_get_pro_plugin_info", "tmpcoder_get_pro_plugin_info");
-add_action("wp_ajax_nopriv_tmpcoder_get_pro_plugin_info", "tmpcoder_get_pro_plugin_info");
-function tmpcoder_get_pro_plugin_info(){
-    
-    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'tmpcoder_get_pro_addons_info') ) {
-    	exit; // Get out of here, the nonce is rotten!
+if ( ! function_exists( 'tmpcoder_theme_wizard_mark_completed' ) ) {
+    /**
+     * Persist final wizard completion state for one-step flow.
+     *
+     * @return void
+     */
+    function tmpcoder_theme_wizard_mark_completed() {
+        delete_option( TMPCODER_THEME_SLUG . '_wizard_step' );
+        update_option( TMPCODER_THEME_SLUG . '_wizard_done', 1 );
+        update_option( 'sastra_addons_wizard_page', 1 );
+        update_option( 'spexo_addons_wizard_page', 1 );
     }
-    
-    if ( ! is_user_logged_in() ){
-        esc_html_e("You must log in to site setup", 'spexo');
-        die();
+}
+
+add_action( 'wp_ajax_tmpcoder_theme_wizard_one_step_setup', 'tmpcoder_theme_wizard_one_step_setup' );
+function tmpcoder_theme_wizard_one_step_setup() {
+    if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'tmpcoder_theme_wizard_one_step_setup' ) ) {
+        wp_send_json_error(
+            array(
+                'message' => __( 'Security check failed. Please refresh and try again.', 'spexo' ),
+            )
+        );
     }
 
-    $admin_url = admin_url('?saved=wizard');
-
-    if ( is_plugin_active( 'sastra-essential-addons-for-elementor/sastra-essential-addons-for-elementor.php' ) ) {
-        
-        $admin_url = admin_url('admin.php?page=tmpcoder-import-demo&saved=wizard');
+    if ( ! tmpcoder_theme_wizard_can_manage_setup() ) {
+        tmpcoder_theme_wizard_send_auth_error();
     }
 
-    ob_start();
-        echo wp_kses_post(sprintf(
-            /* translators: %s is License Activation Heading */
-            '<h2 class="wizard-heading">%s</h2>', __("Get Spexo Addons Pro", 'spexo')));
-            echo '<p class="wizard-title-text">'.esc_html('Unlock access to all our premium widgets and features.').'</p>';
-            echo '<ul class="tmpcoder-wizard-pro-features-list">
-                    <li>'.esc_html('80+ Pro Widgets').'</li>
-                    <li>'.esc_html('75+ Pro Prebuilt Blocks').'</li>
-                    <li>'.esc_html('25+ Pro Prebuilt Sections').'</li>
-                    <li>'.esc_html('30+ Pro Prebuilt WebSites').'</li>
-                </ul>';
+    // Fast-path: if required plugins are already active, complete and redirect immediately.
+    if ( tmpcoder_theme_wizard_are_setup_plugins_active() ) {
+        tmpcoder_theme_wizard_mark_completed();
+        wp_send_json_success(
+            array(
+                'message'      => __( 'Spexo setup is already ready. Redirecting...', 'spexo' ),
+                'redirect_url' => esc_url_raw( tmpcoder_theme_wizard_setup_redirect_url() ),
+                'already_active' => true,
+            )
+        );
+    }
 
-            echo "<a target='_blank' href='".esc_url(TMPCODER_PURCHASE_PRO_URL.'?ref=tmpcoder-theme-wizard')."' class='tmpcoder-get-pro-btn'>";
-            ?>
+    /**
+     * One-step wizard: Elementor → Redux → Spexo Addon (canonical list; not TGMPA file_path,
+     * which is a bare slug until the plugin exists on disk).
+     */
+    $plugins = tmpcoder_theme_wizard_get_setup_plugin_jobs();
+    if ( empty( $plugins ) ) {
+        wp_send_json_error(
+            array(
+                'message' => __( 'Required plugins are not configured for setup.', 'spexo' ),
+            )
+        );
+    }
 
-            <img src="<?php echo esc_url(get_template_directory_uri().'/assets/images/pro-icon.svg'); ?>">
-            <span><?php echo esc_html__( 'Get Pro Now', 'spexo' ); ?></span>
+    $failed_plugins = array();
+    foreach ( $plugins as $plugin ) {
+        $result = tmpcoder_theme_wizard_install_and_activate_plugin( $plugin );
+        if ( is_wp_error( $result ) ) {
+            $name = ! empty( $plugin['name'] ) ? $plugin['name'] : ( ! empty( $plugin['slug'] ) ? $plugin['slug'] : $plugin['file_path'] );
+            $failed_plugins[] = $name . ': ' . $result->get_error_message();
+        }
+    }
 
-            <?php
-            echo "</a>";
+    if ( ! empty( $failed_plugins ) ) {
+        wp_send_json_error(
+            array(
+                'message' => sprintf(
+                    /* translators: %s list of plugin errors. */
+                    __( 'Setup failed for some plugins: %s', 'spexo' ),
+                    implode( ', ', $failed_plugins )
+                ),
+            )
+        );
+    }
 
-            echo '<div class="next-step-action">';
-            echo '<a href='.esc_url($admin_url).' class="button button-primary next-step-btn">'.esc_html__('Done', 'spexo').'</a>';
-            echo '</div>';
+    if ( ! tmpcoder_theme_wizard_are_setup_plugins_active() ) {
+        wp_send_json_error(
+            array(
+                'message' => __( 'Some required plugins are not active yet. Please try again.', 'spexo' ),
+            )
+        );
+    }
 
-    $output = ob_get_contents();
-    ob_end_clean();
+    tmpcoder_theme_wizard_mark_completed();
 
-    wp_send_json_success(array( 'data'=> $output ));
+    wp_send_json_success(
+        array(
+            'message'      => __( 'Recommended plugins installed and activated successfully.', 'spexo' ),
+            'redirect_url' => esc_url_raw( tmpcoder_theme_wizard_setup_redirect_url() ),
+        )
+    );
 }

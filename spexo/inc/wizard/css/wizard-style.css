@@ -1,3 +1,286 @@
+/**
+ * Spexo Theme Wizard — full-screen shell, header, landing (reference UI).
+ * Scoped to body.spexo-theme-wizard-fullscreen where needed.
+ */
+
+body.spexo-theme-wizard-fullscreen #wpcontent {
+	margin-left: 0 !important;
+	padding-left: 0 !important;
+}
+
+body.spexo-theme-wizard-fullscreen #adminmenuback,
+body.spexo-theme-wizard-fullscreen #adminmenuwrap {
+	display: none !important;
+}
+
+body.spexo-theme-wizard-fullscreen #wpadminbar {
+	display: none !important;   
+}
+
+body.spexo-theme-wizard-fullscreen #wpfooter {
+	display: none !important;
+}
+
+body.spexo-theme-wizard-fullscreen #wpbody-content {
+	float: none !important;
+	width: auto !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+body.spexo-theme-wizard-fullscreen #wpbody {
+	padding-top: 0 !important;
+}
+
+body.spexo-theme-wizard-fullscreen #screen-meta,
+body.spexo-theme-wizard-fullscreen #screen-meta-links {
+	display: none !important;
+}
+
+body.appearance_page_tmpcoder-theme-wizard.spexo-theme-wizard-fullscreen,
+body.admin_page_tmpcoder-theme-wizard.spexo-theme-wizard-fullscreen {
+	background: #fff !important;
+}
+
+body.spexo-theme-wizard-fullscreen .wrap.spexo-wizard-shell {
+	margin: 0;
+	max-width: none;
+	width: 100%;
+	padding: 0;
+	box-sizing: border-box;
+	position: relative;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.spexo-wizard-header {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 56px;
+	padding: 0 clamp(20px, 4vw, 40px);
+	border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+	background: #fff;
+}
+
+.spexo-wizard-header__brand {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+}
+
+.spexo-wizard-header__mark {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 10px;
+	background: #8b5cf6;
+	color: #fff;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 1;
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.spexo-wizard-header__mark-img {
+	display: block;
+	width: 20px;
+	height: 20px;
+	object-fit: contain;
+}
+
+.spexo-wizard-header__title {
+	font-size: 18px;
+	font-weight: 700;
+	color: #0f172b;
+	letter-spacing: -0.02em;
+	line-height: 1.2;
+}
+
+.spexo-wizard-header__skip {
+    color: #3c434a;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+.spexo-wizard-header__skip:after {
+    content: "\f335" / '';
+    font: normal 20px / 1 dashicons;
+    font-size: 20px;
+    position: relative;
+    top: 1px;
+}
+
+.spexo-wizard-header__skip:hover {
+	color: #5729d9;
+}
+
+.spexo-wizard-body {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	position: relative;
+	background: #fff;
+}
+
+.spexo-wizard-shell .theme-wizard-main {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	position: relative;
+	max-width: none;
+	width: 100%;
+	margin: 0;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	background: #fff;
+}
+
+/* Landing: hide step tabs, center hero */
+.spexo-wizard-shell.spexo-wizard-landing-active .theme-wizard-nav {
+	display: none !important;
+}
+
+.spexo-wizard-shell.spexo-wizard-landing-active #theme-welcome.tab-content.active {
+	display: flex !important;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	padding: clamp(24px, 5vw, 48px) clamp(20px, 4vw, 40px);
+	box-sizing: border-box;
+}
+
+.spexo-wizard-landing {
+	text-align: center;
+	width: 100%;
+	max-width: 520px;
+	margin: 0 auto;
+}
+
+.spexo-wizard-landing__rocket {
+	width: 36px;
+	height: 36px;
+	transform: rotate(-18deg);
+}
+
+.spexo-wizard-landing__heading {
+	font-size: clamp(1.75rem, 4vw, 2.25rem);
+	font-weight: 700;
+	color: #0f172b;
+	margin: 0 0 16px;
+	line-height: 1.2;
+	padding: 0 !important;
+	text-align: center !important;
+}
+
+.spexo-wizard-landing__lead {
+	margin: 0 auto 32px;
+	font-size: 15px;
+	line-height: 1.6;
+	color: #62748e;
+	padding: 0 !important;
+	text-align: center !important;
+	max-width: 420px;
+}
+
+.spexo-wizard-landing__actions {
+	display: flex;
+	justify-content: center;
+	margin: 0;
+}
+
+.spexo-wizard-btn.spexo-wizard-btn--primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 12px 28px !important;
+	font-size: 15px !important;
+	font-weight: 600 !important;
+	border-radius: 8px !important;
+	border: none !important;
+	background: #8b5cf6 !important;
+	color: #fff !important;
+	box-shadow: none !important;
+	line-height: 1.25 !important;
+	min-height: 48px;
+	height: auto;
+	font-family: inherit;
+}
+
+.spexo-wizard-btn.spexo-wizard-btn--primary:hover,
+.spexo-wizard-btn.spexo-wizard-btn--primary:focus {
+	background: #7c3aed !important;
+	color: #fff !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.spexo-wizard-btn__chevron {
+	font-size: 1.35em;
+	font-weight: 300;
+	line-height: 1;
+	margin-top: -1px;
+}
+
+.spexo-wizard-landing__consent-note {
+	margin: 14px 0 0;
+	max-width: 550px;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #94a3b8;
+	text-align: center;
+}
+
+.spexo-wizard-landing__skip-wrap {
+	margin: 24px 0 0;
+}
+
+.spexo-wizard-landing__skip.skip-theme-wizard {
+	float: none;
+	margin: 0;
+}
+
+.spexo-wizard-landing__skip {
+	color: #94a3b8;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+.spexo-wizard-landing__skip:hover,
+.spexo-wizard-landing__skip:focus {
+	color: #64748b;
+	text-decoration: underline;
+}
+
+/* Steps 2–3: scrollable content under header */
+.spexo-wizard-shell:not(.spexo-wizard-landing-active) .theme-wizard-nav {
+	flex-shrink: 0;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-shell:not(.spexo-wizard-landing-active) .tab-content.active {
+	display: flex !important;
+	flex-direction: column;
+	flex: 1;
+	overflow-y: auto;
+	min-height: 0;
+	padding: clamp(16px, 3vw, 32px) clamp(16px, 3vw, 40px) 40px;
+	box-sizing: border-box;
+}
+
+/* --- legacy wizard styles below --- */
+
 .tmpcoder-theme-wizard .button {
     color: #fff;
     border: 1px solid #5729d9;
@@ -260,18 +543,6 @@ body .tmpcoder-theme-wizard .theme-wizard-main .wizard-heading{
     text-align: left;
     font-size: 14px;
     margin-top: 0px;
-}
-.tmpcoder-theme-wizard .skip-theme-wizard {
-    cursor: pointer;
-    float: left;
-    margin-left: 30px;
-    margin-top: 30px;
-    color: #aaa;
-    font-size: 15px;
-}
-.tmpcoder-theme-wizard .skip-theme-wizard:hover {
-    color: #aaa;
-    text-decoration: underline;
 }
 
 .tmpcoder-theme-wizard .tab-content-install-plugins .tmpcoder-message-box {
@@ -558,4 +829,157 @@ body .tmpcoder-theme-wizard .theme-wizard-main .wizard-heading{
     .tmpcoder-theme-wizard .tab-content-install-plugins .plugin_box:nth-child(3) {
         width: 31%;
     }
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-shell .theme-wizard-main {
+	max-width: none !important;
+	width: 100% !important;
+	margin: 0 !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	display: flex !important;
+	flex-direction: column !important;
+    background: #f0f5fa;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-header {
+	height: 80px;
+	min-height: 80px;
+	padding: 0 24px;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-header__brand {
+	gap: 12px;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-header__mark {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-header__mark-img {
+	width: 32px;
+	height: 32px;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-header__title {
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: 0;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-shell.spexo-wizard-landing-active #theme-welcome.tab-content.active {
+	display: flex !important;
+	flex: 1 !important;
+	align-items: center !important;
+	justify-content: center !important;
+	padding: 24px 48px 48px !important;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-landing {
+	max-width: 768px;
+}
+body.spexo-theme-wizard-fullscreen .spexo-wizard-landing__icon {
+    padding-bottom: 24px;
+}
+body.spexo-theme-wizard-fullscreen .spexo-wizard-landing__icon svg {
+    display: block;
+    margin: 0 auto;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-landing__rocket {
+	width: 32px;
+	height: 32px;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-landing__heading {
+	font-size: 30px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+	line-height: 36px;
+	font-weight: 600;
+	letter-spacing: 0;
+	margin-bottom: 16px;
+	color: #111827;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-landing__lead {
+	max-width: 460px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #3c434a;
+    margin-bottom: 24px;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-btn.spexo-wizard-btn--primary:hover {
+	background: #fff !important;
+    color: #5729d9 !important;
+    border: 1px solid #5729d9 !important;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-btn.spexo-wizard-btn--primary {
+    padding: 8px 20px !important;
+    border-radius: 5px !important;
+    font-size: 13px !important;
+    line-height: 1.33333333 !important;
+    min-height: unset !important;
+    font-weight: 500 !important;
+    background: #5729d9 !important;
+    box-shadow: none !important;
+    border: 1px solid #5729d9 !important;
+    transition: all 400ms ease;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-btn.spexo-wizard-btn--primary:disabled,
+body.spexo-theme-wizard-fullscreen .spexo-wizard-btn.spexo-wizard-btn--primary.is-loading {
+	opacity: 1 !important;
+	color: #fff !important;
+	cursor: wait !important;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-btn.spexo-wizard-btn--primary.is-loading .spexo-wizard-btn__chevron {
+	display: none;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-btn.spexo-wizard-btn--primary.is-loading::before {
+	content: "";
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 8px;
+	border: 2px solid rgba(255, 255, 255, 0.35);
+	border-top-color: #fff;
+	border-radius: 50%;
+	animation: spexo-wizard-btn-spin 0.7s linear infinite;
+}
+
+@keyframes spexo-wizard-btn-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-btn__chevron {
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: -6px;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-landing__consent-note {
+	font-size: 12px;
+	color: #6b7280;
+    margin: 15px auto 0;
+    font-style: italic;
+}
+
+body.spexo-theme-wizard-fullscreen .spexo-wizard-landing__skip-wrap,
+body.spexo-theme-wizard-fullscreen .spexo-wizard-landing__skip {
+	display: none;
+}
+
+.notice1, .notice, .updated, .update-nag, .error, .warning {
+    display: none !important;
 }

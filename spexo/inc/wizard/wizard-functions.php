@@ -75,6 +75,21 @@ if (!function_exists('tmpcoder_install_plugin')) {
                 )
             );
 
+            if ( is_wp_error( $api ) ) {
+                return $api;
+            }
+
+            if ( empty( $api->download_link ) ) {
+                return new WP_Error(
+                    'no_download_link',
+                    sprintf(
+                        /* translators: %s: plugin slug. */
+                        __( 'No download package found for plugin: %s', 'spexo' ),
+                        $plugin_slug
+                    )
+                );
+            }
+
             $download_link = $api->download_link;
         } else {
             $download_link = $plugin_slug;
@@ -86,11 +101,22 @@ if (!function_exists('tmpcoder_install_plugin')) {
 
         $install = $upgrader->install( $download_link );
 
-        if ( false === $install ) {
-            return false;
-        } else {
-            return true;
+        if ( is_wp_error( $install ) ) {
+            return $install;
         }
+
+        if ( false === $install ) {
+            return new WP_Error(
+                'plugin_install_failed',
+                sprintf(
+                    /* translators: %s: plugin slug. */
+                    __( 'Plugin installation failed: %s', 'spexo' ),
+                    $plugin_slug
+                )
+            );
+        }
+
+        return true;
     }
 }
 

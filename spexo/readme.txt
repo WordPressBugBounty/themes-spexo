@@ -4,7 +4,7 @@ Author: Spexo
 Requires at least: WordPress 4.7+
 Tested up to: WordPress 6.7
 Requires PHP: 7.4
-Version: 2.0.6
+Version: 2.0.7
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, e-commerce, news, portfolio, food-and-drink, one-column, custom-background, custom-colors, full-width-template, custom-menu, custom-logo, featured-images, sticky-post, theme-options, threaded-comments, translation-ready
@@ -67,79 +67,12 @@ Privacy Policy for the [Google Fonts API](https://developers.google.com/fonts/fa
 Additional Font Metadata Source for WordPress Customizer Typography Options:
 - [Google Fonts Metadata](https://fonts.google.com/metadata/fonts)
 
-
 == Changelog ==
 
-= 2.0.6 =
-Enhanced : The "Nothing Found" page by improving the banner title and description styling with additional CSS for a more polished look.
+= 2.0.7 - 14-May-2026 =
+ 
+New:
+ 
+* Redesigned Setup Wizard experience for faster and smoother onboarding.
+* Enhanced the overall admin dashboard interface with a more modern, user-friendly, and visually polished design.
 
-= 2.0.5 =
-* Added: New Pricing Three Column Block Pattern
-  - Professional three-column pricing layout with highlighted Pro Plan
-  - Features circle-check SVG icons for feature lists
-  - Responsive design with proper visual hierarchy
-  - Consistent with theme's design system and color scheme
-
-* Optimization: Enhanced JavaScript and CSS performance
-  - Improved code minification and compression
-  - Optimized asset loading for faster page speeds
-
-* Enhancement: Improved Product Grid styling support 
-	- Grid Styles now adapt dynamically based on Customizer options. 
-
-= 2.0.4 =
-* Added: Two custom JavaScript code fields in Theme Options – load JS in <head> and before </body> tag on frontend.
-  - Users can add JS code without <script> tags for safer script injection.
-* Added WordPress sidebar options in the Customizer for better layout control:
-  - Sidebar selection for Single Post pages.
-  - Sidebar selection for Archive pages.
-  - Sidebar selection for Search Results pages.
-* These enhancements improve theme flexibility and user control over page layouts and custom scripting.
-
-
-= 2.0.3 =
-* Added: Versatile Block Patterns for effortless design Hero Section, Featured Section, Banner, Post, and Teams Patterns for enhanced flexibility and creativity!
-* Improved : The overall look and feel of the theme's default design, focusing on a more modern and polished aesthetic. Improved spacing and alignment for a balanced and visually appealing layout across all devices.
-* Fix: Notice textdomain was triggered too early.
-
-
-= 2.0.2 =
-* Improved: Added preset logo and favicon support in Starter Content.
-* Improved: Included style.css description for better theme identification.
-
-= 2.0.1 =
-* Improved: Enhanced theme starter content for a more streamlined setup and better user experience.
-
-= 2.0.0 =
-* Security Enhancements: Improved wizard process security.
-* Added: Full support for the Gutenberg editor, enabling block-based content editing.
-* Added: Starter content for a quick setup.
-* Added: Global customization options in the WordPress Customizer for better control.
-
-= 1.0.5 =
-* New demo updated
-
-= 1.0.4 =
-* Added: Craft Beer Elementor Template
-* Added: Furniture Shop Elementor Template
-* Added: Freelancer Portfolio Elementor Template
-* Added: Restaurant Elementor Template
-* Added: Tech Company Elementor Template
-* Added: Spa Elementor Template
-* Added: Photography Portfolio Elementor Template
-* Added: Mega Store Elementor Template
-* Added: Personal Blog Elementor Template
-
-= 1.0.3 =
-* Added: Streamlined theme setup wizard process
-
-= 1.0.2 =
-* Fixed: Added translation functionality for raw text.
-* Improved: Enhanced keyboard navigation for the mobile menu.
-* Fixed: Escaped global style options for better security.
-
-= 1.0.1 =
-* Added: Rebranded to Spexo
-
-= 1.0.0 =
-* Initial Release
