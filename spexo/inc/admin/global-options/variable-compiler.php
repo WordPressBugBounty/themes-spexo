@@ -1,10 +1,10 @@
 <?php
 
-// Add styles to frontend
-add_action('wp_head', 'tmpcoder_wp_head_theme_variable', 1);
+// Load before Global Styles (theme.json uses var(--heading*-font-size), etc.).
+add_action( 'wp_enqueue_scripts', 'tmpcoder_wp_head_theme_variable', 5 );
 
-// Add styles to Gutenberg editor
-add_action('enqueue_block_editor_assets', 'tmpcoder_wp_head_theme_variable', 1);
+// Block editor + Site Editor.
+add_action( 'enqueue_block_editor_assets', 'tmpcoder_wp_head_theme_variable', 5 );
 
 function tmpcoder_wp_head_theme_variable(){
     

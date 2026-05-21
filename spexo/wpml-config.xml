@@ -1,0 +1,18 @@
+<wpml-config>
+	<custom-fields>
+		<custom-field action="copy">site-content-layout</custom-field>
+		<custom-field action="copy">theme-transparent-header-meta</custom-field>
+		<custom-field action="copy">site-sidebar-layout</custom-field>
+		<custom-field action="copy">site-post-title</custom-field>
+	</custom-fields>
+	<admin-texts>
+		<key name="tmpcoder_global_theme_options_spexo">
+			<key name="tmpcoder_logo_text" />
+			<key name="tmpcoder_preloder_custom_html" />
+			<key name="tmpcoder_footer_copyright_text" />
+		</key>
+		<key name="theme_mods_spexo">
+			<key name="footer_copyright" />
+		</key>
+	</admin-texts>
+</wpml-config>
