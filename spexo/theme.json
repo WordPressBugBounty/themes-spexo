@@ -1,10 +1,94 @@
 {
 	"$schema": "https://schemas.wp.org/wp/7.0/theme.json",
-	"version": 2,
+	"version": 3,
 	"settings": {
-        "layout": {
+		"layout": {
 			"contentSize": "var(--tmpcoder-container-width)",
 			"wideSize": "var(--tmpcoder-container-width)"
+		},
+		"color": {
+			"palette": [
+				{
+					"name": "Primary",
+					"slug": "primary",
+					"color": "var(--theme-primary-color)"
+				},
+				{
+					"name": "Secondary",
+					"slug": "secondary",
+					"color": "var(--theme-secondary-color)"
+				},
+				{
+					"name": "Accent",
+					"slug": "accent",
+					"color": "var(--theme-accent-color)"
+				},
+				{
+					"name": "Background",
+					"slug": "background",
+					"color": "var(--theme-background-color)"
+				},
+				{
+					"name": "Base",
+					"slug": "base",
+					"color": "var(--theme-text-color)"
+				},
+				{
+					"name": "Global Border",
+					"slug": "global-border",
+					"color": "var(--theme-global-border-color)"
+				},
+				{
+					"name": "Theme Color 1",
+					"slug": "theme-color-1",
+					"color": "var(--theme-global-color-1)"
+				},
+				{
+					"name": "Theme Color 2",
+					"slug": "theme-color-2",
+					"color": "var(--theme-global-color-2)"
+				},
+				{
+					"name": "Theme Color 3",
+					"slug": "theme-color-3",
+					"color": "var(--theme-global-color-3)"
+				},
+				{
+					"name": "Theme Color 4",
+					"slug": "theme-color-4",
+					"color": "var(--theme-global-color-4)"
+				},
+				{
+					"name": "Button Background",
+					"slug": "button-background",
+					"color": "var(--theme-button-background)"
+				},
+				{
+					"name": "Button Background Hover",
+					"slug": "button-background-hover",
+					"color": "var(--theme-button-background-hover)"
+				},
+				{
+					"name": "Button Text",
+					"slug": "button-text",
+					"color": "var(--button-text-color)"
+				},
+				{
+					"name": "Button Border",
+					"slug": "button-border",
+					"color": "var(--button-border-color)"
+				},
+				{
+					"name": "Link",
+					"slug": "link",
+					"color": "var(--theme-link-color)"
+				},
+				{
+					"name": "Link Hover",
+					"slug": "link-hover",
+					"color": "var(--theme-link-hover-color)"
+				}
+			]
 		},
 		"spacing": {
 			"blockGap": true,
@@ -54,130 +138,241 @@
 			]
 		},
 		"typography": {
-	      "customFontSize": true,
-	      "dropCap": true,
-	      "fontSizes": [
-	        {
-	          "size": "var(--heading6-font-size)",
-	          "name": "Small",
-	          "slug": "small"
-	        },
-	        {
-	          "size": "var(--heading5-font-size)",
-	          "name": "Base",
-	          "slug": "base"
-	        },
-	        {
-	          "size": "var(--heading4-font-size)",
-	          "name": "Medium",
-	          "slug": "medium"
-	        },
-	        {
-	          "size": "var(--heading3-font-size)",
-	          "name": "Large",
-	          "slug": "large"
-	        },
-	        {
-	          "size": "var(--heading2-font-size)",
-	          "name": "Extra Large",
-	          "slug": "x-large"
-	        },
-	        {
-	          "size": "var(--heading1-font-size)",
-	          "name": "2X Large",
-	          "slug": "xx-large"
-	        }
-	      ]
-	    },
-        "border": {
-            "color": true,
-            "radius": true,
-            "style": true,
-            "width": true
-        }
+			"customFontSize": true,
+			"dropCap": true,
+			"fontFamilies": [
+				{
+					"name": "Theme Font",
+					"slug": "theme-font",
+					"fontFamily": "var(--theme-font-family)"
+				},
+				{
+					"name": "Button Font",
+					"slug": "button-font",
+					"fontFamily": "var(--button-font-family)"
+				}
+			],
+			"fontSizes": [
+				{
+					"size": "var(--heading6-font-size)",
+					"name": "Small",
+					"slug": "small"
+				},
+				{
+					"size": "var(--heading5-font-size)",
+					"name": "Base",
+					"slug": "base"
+				},
+				{
+					"size": "var(--heading4-font-size)",
+					"name": "Medium",
+					"slug": "medium"
+				},
+				{
+					"size": "var(--heading3-font-size)",
+					"name": "Large",
+					"slug": "large"
+				},
+				{
+					"size": "var(--heading2-font-size)",
+					"name": "Extra Large",
+					"slug": "x-large"
+				},
+				{
+					"size": "var(--heading1-font-size)",
+					"name": "2X Large",
+					"slug": "xx-large"
+				},
+				{
+					"size": "var(--button-font-size)",
+					"name": "Button",
+					"slug": "button"
+				}
+			]
+		},
+		"border": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		}
 	},
-    "styles": {
+	"styles": {
 		"blocks": {
 			"core/button": {
 				"border": {
-					"radius": "5px"
+					"radius": "var(--button-border-radius)",
+					"color": "var(--button-border-color)"
+				},
+				"color": {
+					"background": "var(--theme-button-background)",
+					"text": "var(--button-text-color)"
+				},
+				"spacing": {
+					"padding": {
+						"top": "var(--button-padding-top)",
+						"right": "var(--button-padding-right)",
+						"bottom": "var(--button-padding-bottom)",
+						"left": "var(--button-padding-left)"
+					}
 				},
 				"typography": {
-					"lineHeight": "1"
+					"fontFamily": "var(--button-font-family)",
+					"fontSize": "var(--button-font-size)",
+					"fontWeight": "var(--button-font-weight)",
+					"lineHeight": "var(--button-line-height)",
+					"letterSpacing": "var(--button-letter-spacing)",
+					"textTransform": "var(--button-text-transform)"
 				},
 				"variations": {
 					"outline": {
 						"color": {
-							"text": "var:preset|color|primary"
+							"text": "var(--theme-primary-color)",
+							"background": "transparent"
+						},
+						"border": {
+							"color": "var(--button-border-color)"
 						}
 					}
 				}
 			},
 			"core/site-title": {
 				"typography": {
-					"fontSize": "var(--heading2-font-size)"
+					"fontSize": "var(--heading2-font-size)",
+					"fontFamily": "var(--heading2-font-family)",
+					"fontWeight": "var(--heading2-font-weight)",
+					"lineHeight": "var(--heading2-line-height)"
+				},
+				"color": {
+					"text": "var(--heading2-text-color)"
 				}
 			}
 		},
 		"color": {
-			"background": "var:preset|color|background",
-			"text": "var:preset|color|base"
+			"background": "var(--theme-background-color)",
+			"text": "var(--theme-text-color)"
 		},
 		"elements": {
 			"button": {
 				"color": {
-					"background": "var:preset|color|primary"
+					"background": "var(--theme-button-background)",
+					"text": "var(--button-text-color)"
+				},
+				"border": {
+					"radius": "var(--button-border-radius)",
+					"color": "var(--button-border-color)"
+				},
+				"spacing": {
+					"padding": {
+						"top": "var(--button-padding-top)",
+						"right": "var(--button-padding-right)",
+						"bottom": "var(--button-padding-bottom)",
+						"left": "var(--button-padding-left)"
+					}
+				},
+				"typography": {
+					"fontFamily": "var(--button-font-family)",
+					"fontSize": "var(--button-font-size)",
+					"fontWeight": "var(--button-font-weight)",
+					"lineHeight": "var(--button-line-height)"
 				}
 			},
 			"h1": {
+				"color": {
+					"text": "var(--heading1-text-color)"
+				},
 				"typography": {
+					"fontFamily": "var(--heading1-font-family)",
 					"fontSize": "var(--heading1-font-size)",
-					"lineHeight": "1.2"
+					"fontWeight": "var(--heading1-font-weight)",
+					"lineHeight": "var(--heading1-line-height)",
+					"letterSpacing": "var(--heading1-letter-spacing)",
+					"textTransform": "var(--heading1-text-transform)"
 				}
 			},
 			"h2": {
+				"color": {
+					"text": "var(--heading2-text-color)"
+				},
 				"typography": {
+					"fontFamily": "var(--heading2-font-family)",
 					"fontSize": "var(--heading2-font-size)",
-					"lineHeight": "1.3"
+					"fontWeight": "var(--heading2-font-weight)",
+					"lineHeight": "var(--heading2-line-height)",
+					"letterSpacing": "var(--heading2-letter-spacing)",
+					"textTransform": "var(--heading2-text-transform)"
 				}
 			},
 			"h3": {
+				"color": {
+					"text": "var(--heading3-text-color)"
+				},
 				"typography": {
+					"fontFamily": "var(--heading3-font-family)",
 					"fontSize": "var(--heading3-font-size)",
-					"lineHeight": "1.4"
+					"fontWeight": "var(--heading3-font-weight)",
+					"lineHeight": "var(--heading3-line-height)",
+					"letterSpacing": "var(--heading3-letter-spacing)",
+					"textTransform": "var(--heading3-text-transform)"
 				}
 			},
 			"h4": {
+				"color": {
+					"text": "var(--heading4-text-color)"
+				},
 				"typography": {
+					"fontFamily": "var(--heading4-font-family)",
 					"fontSize": "var(--heading4-font-size)",
-					"lineHeight": "1.5"
+					"fontWeight": "var(--heading4-font-weight)",
+					"lineHeight": "var(--heading4-line-height)",
+					"letterSpacing": "var(--heading4-letter-spacing)",
+					"textTransform": "var(--heading4-text-transform)"
 				}
 			},
 			"h5": {
+				"color": {
+					"text": "var(--heading5-text-color)"
+				},
 				"typography": {
+					"fontFamily": "var(--heading5-font-family)",
 					"fontSize": "var(--heading5-font-size)",
-					"lineHeight": "1.6"
+					"fontWeight": "var(--heading5-font-weight)",
+					"lineHeight": "var(--heading5-line-height)",
+					"letterSpacing": "var(--heading5-letter-spacing)",
+					"textTransform": "var(--heading5-text-transform)"
 				}
 			},
 			"h6": {
+				"color": {
+					"text": "var(--heading6-text-color)"
+				},
 				"typography": {
+					"fontFamily": "var(--heading6-font-family)",
 					"fontSize": "var(--heading6-font-size)",
-					"lineHeight": "1.6"
+					"fontWeight": "var(--heading6-font-weight)",
+					"lineHeight": "var(--heading6-line-height)",
+					"letterSpacing": "var(--heading6-letter-spacing)",
+					"textTransform": "var(--heading6-text-transform)"
 				}
 			},
 			"heading": {
 				"color": {
-					"text": "var:preset|color|secondary"
+					"text": "var(--theme-secondary-color)"
 				},
 				"typography": {
-					"fontFamily": "var:preset|font-family|Poppins",
+					"fontFamily": "var(--theme-font-family)",
 					"fontStyle": "normal",
-					"fontWeight": "500"
+					"fontWeight": "var(--theme-font-weight)"
 				}
 			},
 			"link": {
 				"color": {
-					"text": "var:preset|color|primary"
+					"text": "var(--theme-link-color)"
+				},
+				":hover": {
+					"color": {
+						"text": "var(--theme-link-hover-color)"
+					}
 				}
 			}
 		},
@@ -191,11 +386,12 @@
 			}
 		},
 		"typography": {
-			"fontFamily": "var:preset|font-family|Poppins",
+			"fontFamily": "var(--theme-font-family)",
 			"fontSize": "var(--theme-font-size)",
 			"fontStyle": "normal",
-			"fontWeight": "400",
-			"lineHeight": "1.6"
+			"fontWeight": "var(--theme-font-weight)",
+			"lineHeight": "var(--theme-line-height)",
+			"letterSpacing": "var(--theme-letter-spacing)"
 		}
 	}
 }
