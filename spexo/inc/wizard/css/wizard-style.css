@@ -8,19 +8,6 @@ body.spexo-theme-wizard-fullscreen #wpcontent {
 	padding-left: 0 !important;
 }
 
-body.spexo-theme-wizard-fullscreen #adminmenuback,
-body.spexo-theme-wizard-fullscreen #adminmenuwrap {
-	display: none !important;
-}
-
-body.spexo-theme-wizard-fullscreen #wpadminbar {
-	display: none !important;   
-}
-
-body.spexo-theme-wizard-fullscreen #wpfooter {
-	display: none !important;
-}
-
 body.spexo-theme-wizard-fullscreen #wpbody-content {
 	float: none !important;
 	width: auto !important;
@@ -43,6 +30,7 @@ body.admin_page_tmpcoder-theme-wizard.spexo-theme-wizard-fullscreen {
 }
 
 body.spexo-theme-wizard-fullscreen .wrap.spexo-wizard-shell {
+    z-index:999999999;
 	margin: 0;
 	max-width: none;
 	width: 100%;
@@ -753,6 +741,7 @@ body .tmpcoder-theme-wizard .theme-wizard-main .wizard-heading{
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
+    z-index: 9999999999;
 }
 
 .tmpcoder-skip-theme-wizard-popup.tmpcoder-admin-popup {
@@ -983,3 +972,4 @@ body.spexo-theme-wizard-fullscreen .spexo-wizard-landing__skip {
 .notice1, .notice, .updated, .update-nag, .error, .warning {
     display: none !important;
 }
+

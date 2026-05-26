@@ -4,14 +4,14 @@ Author: Spexo
 Requires at least: WordPress 4.7+
 Tested up to: WordPress 7.0
 Requires PHP: 7.4
-Version: 2.0.9
+Version: 2.0.10
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, e-commerce, news, portfolio, food-and-drink, one-column, custom-background, custom-colors, full-width-template, custom-menu, custom-logo, featured-images, sticky-post, theme-options, threaded-comments, translation-ready
 
 == Description ==
 
-Spexo is a lightweight Elementor Theme for WordPress. It is responsive, SEO optimized and optimized for speed. With over more than 100+ advanced Elementor widgets, and multiple pre-built demos that can be imported with just one click. Spexo(formerly SastraWP) is fully compatible with your favorite Elementor page builder. Spexo is designed to simplify and streamline the website development process using large collection of elementor widgets, Form Stylers, Extensions, WooCommerce Widgets, Prebuilt blocks and Prebuilt sections. Spexo is the developers' top pick. It offers quick WordPress website development and flexible post-launch options. Spexo theme is suitable for blogs, personal portfolios, business websites and ecommerce stores. With over 80+ advanced Elementor widgets, it includes many other cool features like Sticky Header, Particle effects, Lottie animations, parallax backgrounds, and many other essential addons. When you are building eCommerce store using a WooCommerce plugin, Spexo can be one and only choice for the Elementor WooCommerce theme. Spexo(formerly SastraWP) is a true all-in-one solution for Elementor Template Kit Lovers. It is very easy to use for both WordPress beginners and professionals. Spexo includes many pro addons for free, and it also does not need Elementor Pro at some level. Designed, Developed, Maintained & Supported by Spexo team. You can customize the Elementor starter templates very easily and extend them to meet your development requirements. With a vast collection of Elementor template kits available for single-click use. Theme Spexo is fully responsive and compatible with popular WordPress plugins like Elementor, WooCommerce, WPML, Yoast SEO, Jetpack, Contact Form 7, Mailchimp for WordPress, Rankmath, WPForms, Caldera Forms, Ninja Forms and more. Experience the captivating power of the spectral briteful lightning theme. Here are the multipurpose theme demo ready to use, Elementor Blog Template, Elementor Travel Template, Elementor Portfolio Template, Elementor Medical Theme, Elementor Digital Agency Template, Elementor Real Estate Template, Elementor Bear Bar Template, Magazine theme, News portal theme & other beautiful Royal Elementor Templates. Spexo is a comprehensive Elementor WordPress theme that is perfect for any project. Spexo is an optimized WooCommerce Elementor theme, you can quickly create eCommerce stores like Furniture Store, Fashion Store, Cosmetic, Organic Store, Jewellery, Clothing Store Mega Store eCommerce theme, Restaurant, Craft Beer, Electronics Store and many more. Theme Demo Page: http://spexoaddons.com/spexo-elementor-theme/
+Spexo is a lightweight Elementor Theme for WordPress. It is responsive, SEO optimized and optimized for speed. With over more than 100+ advanced Elementor widgets, and multiple pre-built demos that can be imported with just one click. Spexo(formerly SastraWP) is fully compatible with your favorite Elementor page builder. Spexo is designed to simplify and streamline the website development process using large collection of elementor widgets, Form Stylers, Extensions, WooCommerce Widgets, Prebuilt blocks and Prebuilt sections. Spexo is the developers' top pick. It offers quick WordPress website development and flexible post-launch options. Spexo theme is suitable for blogs, personal portfolios, business websites and ecommerce stores. With over 80+ advanced Elementor widgets, it includes many other cool features like Sticky Header, Particle effects, Lottie animations, parallax backgrounds, and many other essential addons. When you are building eCommerce store using a WooCommerce plugin, Spexo can be one and only choice for the Elementor WooCommerce theme. Spexo(formerly SastraWP) is a true all-in-one solution for Elementor Template Kit Lovers. It is very easy to use for both WordPress beginners and professionals. Spexo includes many pro addons for free, and it also does not need Elementor Pro at some level. Designed, Developed, Maintained & Supported by Spexo team. You can customize the Elementor starter templates very easily and extend them to meet your development requirements. With a vast collection of Elementor template kits available for single-click use. Theme Spexo is fully responsive and compatible with popular WordPress plugins like Elementor, WooCommerce, WPML, Yoast SEO, Jetpack, Contact Form 7, Mailchimp for WordPress, Rankmath, WPForms, Caldera Forms, Ninja Forms and more. Experience the captivating power of the spectral briteful lightning theme. Here are the multipurpose theme demo ready to use, Elementor Blog Template, Elementor Travel Template, Elementor Portfolio Template, Elementor Medical Theme, Elementor Digital Agency Template, Elementor Real Estate Template, Elementor Bear Bar Template, Magazine theme, News portal theme & other beautiful Royal Elementor Templates. Spexo is a comprehensive Elementor WordPress theme that is perfect for any project. Spexo is an optimized WooCommerce Elementor theme, you can quickly create eCommerce stores like Furniture Store, Fashion Store, Cosmetic, Organic Store, Jewellery, Clothing Store Mega Store eCommerce theme, Restaurant, Craft Beer, Electronics Store and many more. Theme Demo Page: http://spexoaddons.com/templates/
 
 
 
@@ -69,22 +69,27 @@ Additional Font Metadata Source for WordPress Customizer Typography Options:
 
 == Changelog ==
 
+= 2.0.10 - 26-May-2026 =
+
+Bug Fixes
+
+* Fixed several minor issues and improved overall theme stability and performance.
+
+= 2.0.10 - 26-May-2026 =
+
+Bug Fixes
+
+* Fixed several minor issues and improved overall theme stability and performance.
+
 = 2.0.9 - 22-May-2026 =
 
-Improvements
+Improvements:
 
 * Improved global styling consistency and customization flexibility across colors, borders, spacing, and other theme design settings.
 
 = 2.0.8 - 21-May-2026 =
 
-Improvements
+Improvements:
 
 * Added: Compatibility with WordPress 7.0
-
-= 2.0.7 - 14-May-2026 =
- 
-New:
- 
-* Redesigned Setup Wizard experience for faster and smoother onboarding.
-* Enhanced the overall admin dashboard interface with a more modern, user-friendly, and visually polished design.
 

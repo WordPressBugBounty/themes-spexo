@@ -74,17 +74,7 @@ class Tmpcoder_Theme_Setup_Wizard {
      * @return bool
      */
     private function is_spexo_addon_plugin_active() {
-        $plugin_basename = 'sastra-essential-addons-for-elementor/sastra-essential-addons-for-elementor.php';
-
-        if ( ! function_exists( 'is_plugin_active' ) ) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        }
-
-        if ( function_exists( 'is_plugin_active' ) && is_plugin_active( $plugin_basename ) ) {
-            return true;
-        }
-
-        return function_exists( 'is_plugin_active_for_network' ) && is_plugin_active_for_network( $plugin_basename );
+        return function_exists( 'tmpcoder_setup' ) || defined( 'TMPCODER_PLUGIN_VER' );
     }
 
     /**

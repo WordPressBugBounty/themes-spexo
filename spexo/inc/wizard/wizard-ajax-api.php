@@ -121,7 +121,7 @@ if ( ! function_exists( 'tmpcoder_theme_wizard_is_plugin_marked_active' ) ) {
      * @return bool
      */
     function tmpcoder_theme_wizard_is_plugin_marked_active( $plugin_file ) {
-        $active_plugins = (array) get_option( 'active_plugins', array() );
+        $active_plugins = tmpcoder_theme_wizard_normalize_active_plugins_option();
         if ( in_array( $plugin_file, $active_plugins, true ) ) {
             return true;
         }
@@ -134,6 +134,144 @@ if ( ! function_exists( 'tmpcoder_theme_wizard_is_plugin_marked_active' ) ) {
         }
 
         return false;
+    }
+}
+
+if ( ! function_exists( 'tmpcoder_theme_wizard_normalize_active_plugins_option' ) ) {
+    /**
+     * Normalize malformed `active_plugins` option values before core activation reads them.
+     *
+     * @return string[]
+     */
+    function tmpcoder_theme_wizard_normalize_active_plugins_option() {
+        $raw_active_plugins = get_option( 'active_plugins', array() );
+        $normalized_plugins = array();
+
+        if ( is_array( $raw_active_plugins ) ) {
+            $normalized_plugins = $raw_active_plugins;
+        } elseif ( is_string( $raw_active_plugins ) ) {
+            $maybe_unserialized = maybe_unserialize( $raw_active_plugins );
+
+            if ( is_array( $maybe_unserialized ) ) {
+                $normalized_plugins = $maybe_unserialized;
+            } else {
+                $single_plugin = trim( $raw_active_plugins );
+
+                if ( '' !== $single_plugin && false !== strpos( $single_plugin, '.php' ) ) {
+                    $normalized_plugins = array( $single_plugin );
+                }
+            }
+        }
+
+        $normalized_plugins = array_values(
+            array_filter(
+                array_map(
+                    static function ( $plugin_file ) {
+                        return is_string( $plugin_file ) ? trim( $plugin_file ) : '';
+                    },
+                    $normalized_plugins
+                ),
+                static function ( $plugin_file ) {
+                    return '' !== $plugin_file;
+                }
+            )
+        );
+
+        $current_plugins = is_array( $raw_active_plugins )
+            ? array_values(
+                array_filter(
+                    array_map(
+                        static function ( $plugin_file ) {
+                            return is_string( $plugin_file ) ? trim( $plugin_file ) : '';
+                        },
+                        $raw_active_plugins
+                    ),
+                    static function ( $plugin_file ) {
+                        return '' !== $plugin_file;
+                    }
+                )
+            )
+            : array();
+
+        if ( ! is_array( $raw_active_plugins ) || $normalized_plugins !== $current_plugins ) {
+            update_option( 'active_plugins', $normalized_plugins );
+        }
+
+        return $normalized_plugins;
+    }
+}
+
+if ( ! function_exists( 'tmpcoder_theme_wizard_activate_plugin_safely' ) ) {
+    /**
+     * Activate a plugin while recovering from malformed active plugin state.
+     *
+     * @param string $plugin_file Plugin base file path.
+     * @return null|WP_Error
+     */
+    function tmpcoder_theme_wizard_activate_plugin_safely( $plugin_file ) {
+        $plugin_file = plugin_basename( trim( $plugin_file ) );
+
+        if ( '' === $plugin_file ) {
+            return new WP_Error( 'invalid_plugin', __( 'Invalid plugin file.', 'spexo' ) );
+        }
+
+        $active_plugins = get_option( 'active_plugins', array() );
+
+        if ( is_array( $active_plugins ) ) {
+            try {
+                return activate_plugin( $plugin_file );
+            } catch ( Throwable $exception ) {
+                return new WP_Error( 'plugin_activation_failed', $exception->getMessage() );
+            }
+        }
+
+        if ( in_array( $plugin_file, tmpcoder_theme_wizard_normalize_active_plugins_option(), true ) ) {
+            return null;
+        }
+
+        $buffer_level = ob_get_level();
+
+        try {
+            $valid = validate_plugin( $plugin_file );
+            if ( is_wp_error( $valid ) ) {
+                return $valid;
+            }
+
+            $requirements = validate_plugin_requirements( $plugin_file );
+            if ( is_wp_error( $requirements ) ) {
+                return $requirements;
+            }
+
+            ob_start();
+
+            // Follow core activation steps after repairing malformed option state.
+            plugin_sandbox_scrape( $plugin_file );
+            do_action( 'activate_plugin', $plugin_file, false );
+            do_action( "activate_{$plugin_file}", false );
+
+            $current_plugins   = tmpcoder_theme_wizard_normalize_active_plugins_option();
+            $current_plugins[] = $plugin_file;
+            $current_plugins   = array_values( array_unique( $current_plugins ) );
+            sort( $current_plugins );
+
+            update_option( 'active_plugins', $current_plugins );
+            do_action( 'activated_plugin', $plugin_file, false );
+
+            if ( ob_get_length() > 0 ) {
+                $output = ob_get_clean();
+                return new WP_Error( 'unexpected_output', __( 'The plugin generated unexpected output.', 'spexo' ), $output );
+            }
+
+            ob_end_clean();
+
+            return null;
+        } catch ( Throwable $exception ) {
+            while ( ob_get_level() > $buffer_level ) {
+                ob_end_clean();
+            }
+
+            return new WP_Error( 'plugin_activation_failed', $exception->getMessage() );
+        }
     }
 }
 
@@ -226,7 +364,7 @@ if ( ! function_exists( 'tmpcoder_theme_wizard_install_and_activate_plugin' ) ) 
         }
 
         if ( ! tmpcoder_theme_wizard_is_plugin_marked_active( $resolved_path ) ) {
-            $activate = activate_plugin( $resolved_path );
+            $activate = tmpcoder_theme_wizard_activate_plugin_safely( $resolved_path );
             if ( is_wp_error( $activate ) ) {
                 return $activate;
             }
