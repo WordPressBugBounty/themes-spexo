@@ -1865,7 +1865,7 @@ class Tmpcoder_initialise_customizer_settings {
 
 		$wp_customize->add_setting( 'footer_copyright',
 			array(
-				'default' => wp_kses_post( __( 'Copyright [COPYRIGHT] [CURRENT_YEAR] [SITE_TITLE] | Powered by <a href="https://spexoaddons.com/" target="_blank">Spexo Wordpress Theme</a>', 'spexo' ) ),
+				'default' => wp_kses_post( __( 'Copyright [COPYRIGHT] [CURRENT_YEAR] [SITE_TITLE] | Powered by <a href="http://spexoaddons.com/templates/" target="_blank">Spexo Elementor Templates</a>', 'spexo' ) ),
 				// 'transport' => 'postMessage',
 				'transport' => 'refresh',
 				'sanitize_callback' => 'wp_kses_post'

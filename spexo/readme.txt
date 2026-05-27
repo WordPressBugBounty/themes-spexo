@@ -4,7 +4,7 @@ Author: Spexo
 Requires at least: WordPress 4.7+
 Tested up to: WordPress 7.0
 Requires PHP: 7.4
-Version: 2.0.10
+Version: 2.0.11
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, e-commerce, news, portfolio, food-and-drink, one-column, custom-background, custom-colors, full-width-template, custom-menu, custom-logo, featured-images, sticky-post, theme-options, threaded-comments, translation-ready
@@ -69,9 +69,9 @@ Additional Font Metadata Source for WordPress Customizer Typography Options:
 
 == Changelog ==
 
-= 2.0.10 - 26-May-2026 =
+= 2.0.11 - 27-May-2026 =
 
-Bug Fixes
+Bug Fixes:
 
 * Fixed several minor issues and improved overall theme stability and performance.
 

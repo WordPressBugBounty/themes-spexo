@@ -99,9 +99,9 @@ Redux::setSection( $opt_name,
                 ),
                 'default' => sprintf(
                     /* translators: %1$s is the URL, %2$s is the theme name */
-                    'Copyright [COPYRIGHT] [CURRENT_YEAR] [SITE_TITLE] | Powered by <a href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a>',
-                    esc_url('https://spexoaddons.com/'),
-                    esc_html('Spexo WordPress Theme')
+                    'Copyright [COPYRIGHT] [CURRENT_YEAR] [SITE_TITLE] | Powered by <a href="%1$s" target="_blank">%2$s</a>',
+                    esc_url('http://spexoaddons.com/templates/'),
+                    esc_html('Spexo Elementor Templates')
                 ),
                 'args'   => array(
                     'teeny'            => true,

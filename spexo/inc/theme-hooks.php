@@ -209,7 +209,7 @@ if ( ! function_exists( 'tmpcoder_footer_markup' ) ) {
                             { 
                                 $content = sprintf(
                                     /* translators: %1$s is the URL, %2$s is the theme name */
-                                    __('Copyright [COPYRIGHT] [CURRENT_YEAR] [SITE_TITLE] | Powered by <a href="%1$s" target="_blank" rel="noopener nofollow">%2$s</a>', 'spexo'), esc_url('https://spexoaddons.com/'), esc_html__('Spexo WordPress Theme', 'spexo') );
+                                    __('Copyright [COPYRIGHT] [CURRENT_YEAR] [SITE_TITLE] | Powered by <a href="%1$s" target="_blank">%2$s</a>', 'spexo'), esc_url('http://spexoaddons.com/templates/'), esc_html__('Spexo Elementor Templates', 'spexo') );
 
                                 $content = str_replace( '[COPYRIGHT]', '&copy;', $content );
                                 $content = str_replace( '[CURRENT_YEAR]', $current_year, $content );
@@ -235,7 +235,7 @@ if ( ! function_exists( 'tmpcoder_footer_markup' ) ) {
                             } else {
                                 $content = sprintf(
                                     /* translators: %1$s is the URL, %2$s is the theme name */
-                                    'Copyright [COPYRIGHT] [CURRENT_YEAR] [SITE_TITLE] | Powered by <a href="%1$s" target="_blank" rel="noopener nofollow">%2$s</a>', esc_url('https://spexoaddons.com/'), esc_html('Spexo WordPress Theme') );
+                                    'Copyright [COPYRIGHT] [CURRENT_YEAR] [SITE_TITLE] | Powered by <a href="%1$s" target="_blank" rel="noopener nofollow">%2$s</a>', esc_url('http://spexoaddons.com/templates/'), esc_html('Spexo Elementor Templates') );
     
                                 $content = str_replace( '[COPYRIGHT]', '&copy;', $content );
                                 $content = str_replace( '[CURRENT_YEAR]', $current_year, $content );

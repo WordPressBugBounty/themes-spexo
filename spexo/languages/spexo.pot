@@ -257,7 +257,7 @@ msgstr ""
 #: inc/admin/customizer/tmpcoder-customizer.php:1868
 msgid ""
 "Copyright [COPYRIGHT] [CURRENT_YEAR] [SITE_TITLE] | Powered by <a "
-"href=\"https://spexoaddons.com/\" target=\"_blank\">Spexo Wordpress Theme</a>"
+"href=\"http://spexoaddons.com/templates/\" target=\"_blank\">Spexo Elementor Templates</a>"
 msgstr ""
 
 #: inc/admin/global-options/theme-custom-css.php:12 
@@ -934,7 +934,7 @@ msgid ""
 msgstr ""
 
 #: inc/theme-hooks.php:212
-msgid "Spexo WordPress Theme"
+msgid "Spexo Elementor Templates"
 msgstr ""
 
 #: inc/admin/customizer/tmpcoder-customizer.php:125 
